@@ -25,7 +25,7 @@ jobs:
               "&current=temperature_2m"
               "&temperature_unit=fahrenheit"
           )
-          with urllib.request.urlopen(url) as response:
+          with urllib.request.urlopen(url, timeout=30) as response:
               data = json.load(response)
           temp = round(data["current"]["temperature_2m"])
           badge = {
