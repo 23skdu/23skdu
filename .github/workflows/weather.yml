@@ -146,15 +146,18 @@ jobs:
 
           forecast_lines = forecast_lines[:3]
           lines = ["```mermaid", "flowchart LR"]
+          lines.append('    T["🌲 Seattle Weather\\n47.6062 N, 122.3321 W"]')
           lines.append(f'    N["{icon} Now: {temp} F\\n{condition}"]')
           for index, entry in enumerate(forecast_lines, start=1):
               safe = entry.replace('"', "")
               lines.append(f'    D{index}["{safe}"]')
           if forecast_lines:
-              chain = "N" + "".join(
+              chain = "T --> N" + "".join(
                   f" --> D{index}" for index in range(1, len(forecast_lines) + 1)
               )
               lines.append(f"    {chain}")
+          else:
+              lines.append("    T --> N")
           lines.append("```")
           diagram = "\n".join(lines) + "\n"
 
