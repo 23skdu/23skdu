@@ -83,7 +83,7 @@ jobs:
                 "\($dates[.])\t\($maxs[.])\t\($mins[.])\t\($codes[.])\t\($rises[.])\t\($sets[.])"
               ' 2>/dev/null | while IFS="$(printf '\t')" read -r d hi lo c sr ss; do
                 [ -z "$d" ] && continue
-                day="$(date -d "$d" +%a 2>/dev/null || printf '%s' "$d")"
+                day="$(date -d "$d" +%A 2>/dev/null || printf '%s' "$d")"
                 hi_r="$(printf '%.0f' "$hi" 2>/dev/null || printf '%s' "$hi")"
                 lo_r="$(printf '%.0f' "$lo" 2>/dev/null || printf '%s' "$lo")"
                 weather_meta "$c"
@@ -121,7 +121,7 @@ jobs:
                   ] | @tsv
                 ' 2>/dev/null | while IFS="$(printf '\t')" read -r d hi lo fc sr ss; do
                   [ -z "$d" ] && continue
-                  day="$(date -d "$d" +%a 2>/dev/null || printf '%s' "$d")"
+                  day="$(date -d "$d" +%A 2>/dev/null || printf '%s' "$d")"
                   hi_r="$(printf '%.0f' "$hi" 2>/dev/null || printf '%s' "$hi")"
                   lo_r="$(printf '%.0f' "$lo" 2>/dev/null || printf '%s' "$lo")"
                   ficon="$(icon_for_condition "$fc")"
@@ -388,8 +388,8 @@ jobs:
           forecast_lines = forecast_lines[:3]
           badges = ["🔔", "🔴", "🟢"]
           day_badges = {
-              "Sun": "🔔", "Mon": "🔴", "Tue": "🟢", "Wed": "⛄",
-              "Thu": "🕯️", "Fri": "🦌", "Sat": "🧣",
+              "Sunday": "🔔", "Monday": "🔴", "Tuesday": "🟢", "Wednesday": "⛄",
+              "Thursday": "🕯️", "Friday": "🦌", "Saturday": "🧣",
           }
           sr0, ss0 = sun_times_noaa(today_d)
           sr0_s = parse_api_time(today_sr_raw, sr0)
