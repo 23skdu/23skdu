@@ -4,10 +4,10 @@
 | 🎁 Item | 🌡️ Reading | ❄️ Details | 🌅 Sun / Timing |
 | :--- | :---: | :--- | :---: |
 | 🌟 **Now** | **56 F** | 🌤️ Partly cloudy | `7:14a` / `4:35p` |
-| 🔔 **Sun** | `51/42 F` | 🌦️ Drizzle | `7:15a` / `4:34p` |
-| 🔴 **Mon** | `52/41 F` | 🌦️ Drizzle | `7:17a` / `4:33p` |
-| 🟢 **Tue** | `50/41 F` | 🌤️ Partly cloudy | `7:18a` / `4:32p` |
-| ☀️ **Sun** | ♏ Scorpio `22°` | **7th House** · Placidus | `Nov 14 · 3:35 PM PST` |
+| 🔔 **Sunday** | `51/42 F` | 🌦️ Drizzle | `7:15a` / `4:34p` |
+| 🔴 **Monday** | `52/41 F` | 🌦️ Drizzle | `7:17a` / `4:33p` |
+| 🟢 **Tuesday** | `50/41 F` | 🌤️ Partly cloudy | `7:18a` / `4:32p` |
+| ☀️ **Sun** | ♏ Scorpio `22°` | **7th House** · Placidus | `Nov 14 · 3:39 PM PST` |
 | 🌙 **Moon** | ♑ Capricorn `25°` | **10th House** · 🌒 27% | Waxing Crescent |
 | 🌑 **New Moon** | `Nov 8` | Nov 2026 Phase | `11:02p` PST |
 | 🌓 **First Qtr** | `Nov 17` | Nov 2026 Phase | `3:48a` PST |
