@@ -396,9 +396,9 @@ jobs:
           ss0_s = parse_api_time(today_ss_raw, ss0)
 
           lines = [
-              "## 🎄✨ Seattle Weather · `47.6062 N, 122.3321 W` ✨🎄",
+              "## 🎄✨ Seattle Weather & Sky · `47.6062 N, 122.3321 W` ✨🎄",
               "",
-              "| 🎁 Day | 🌡️ Temp | ❄️ Forecast | 🌅 Sun (Rise / Set) |",
+              "| 🎁 Item | 🌡️ Reading | ❄️ Details | 🌅 Sun / Timing |",
               "| :--- | :---: | :--- | :---: |",
               f"| 🌟 **Now** | **{temp} F** | {icon} {condition} | `{sr0_s}` / `{ss0_s}` |",
           ]
@@ -436,23 +436,12 @@ jobs:
           p_deg = (m_lon - s_lon) % 360.0
           illum = round((1.0 - math.cos(math.radians(p_deg))) * 50.0)
           p_emo, p_name = phase_info(p_deg)
-          now_lbl = now_loc.strftime("%b %-d, %-I:%M %p %Z")
-
-          lines.extend([
-              "",
-              f"### ✨🕯️ Sky & Houses · `{now_lbl}` (Placidus) 🕯️✨",
-              "",
-              "| Body | Zodiac Sign | House | Illumination / Daylight |",
-              "| :--- | :--- | :---: | :--- |",
-              f"| ☀️ **Sun** | {s_sym} {s_name} ({int(s_lon % 30)}°) | **{s_house} House** | "
-              f"Daylight `{sr0_s}` – `{ss0_s}` |",
-              f"| 🌙 **Moon** | {m_sym} {m_name} ({int(m_lon % 30)}°) | **{m_house} House** | "
-              f"{p_emo} {p_name} ({illum}%) |",
-          ])
+          now_lbl = now_loc.strftime("%b %-d · %-I:%M %p %Z")
 
           y_dec = now_loc.year + (now_loc.month - 0.5) / 12.0
           k0 = math.floor((y_dec - 2000.0) * 12.3685) - 2
-          phase_lists = {0.0: [], 0.25: [], 0.5: [], 0.75: []}
+          phase_dates = {0.0: [], 0.25: [], 0.5: [], 0.75: []}
+          phase_times = {0.0: [], 0.25: [], 0.5: [], 0.75: []}
           for dk in range(16):
               k = k0 + dk * 0.25
               jde = moon_phase_jde(k)
@@ -462,22 +451,33 @@ jobs:
               ).astimezone(TZ)
               if dt_loc.year == now_loc.year and dt_loc.month == now_loc.month:
                   frac = round((k - math.floor(k)) * 4) / 4.0
-                  phase_lists[frac].append(
-                      f"{dt_loc.strftime('%b %-d')} · `{fmt_short_time(dt_loc)}`"
-                  )
+                  phase_dates[frac].append(f"`{dt_loc.strftime('%b %-d')}`")
+                  phase_times[frac].append(f"`{fmt_short_time(dt_loc)}`")
 
-          month_title = now_loc.strftime("%B %Y")
+          month_lbl = now_loc.strftime("%b %Y")
+          phase_meta = [
+              (0.0, "🌑", "New Moon"),
+              (0.25, "🌓", "First Qtr"),
+              (0.5, "🌕", "Full Moon"),
+              (0.75, "🌗", "Last Qtr"),
+          ]
+
           lines.extend([
-              "",
-              f"### 🌙🎄 {month_title} Moon Phases · Seattle 🎄🌙",
-              "",
-              "| 🌑 New Moon | 🌓 First Quarter | 🌕 Full Moon | 🌗 Last Quarter |",
-              "| :---: | :---: | :---: | :---: |",
-              "| " + " | ".join(
-                  ", ".join(phase_lists[k]) if phase_lists[k] else "—"
-                  for k in (0.0, 0.25, 0.5, 0.75)
-              ) + " |",
+              f"| ☀️ **Sun** | {s_sym} {s_name} `{int(s_lon % 30)}°` | "
+              f"**{s_house} House** · Placidus | `{now_lbl}` |",
+              f"| 🌙 **Moon** | {m_sym} {m_name} `{int(m_lon % 30)}°` | "
+              f"**{m_house} House** · {p_emo} {illum}% | {p_name} |",
           ])
+          for fk, femo, fname in phase_meta:
+              d_str = " · ".join(phase_dates[fk]) if phase_dates[fk] else "—"
+              t_str = (
+                  " · ".join(phase_times[fk]) + f" {now_loc.tzname()}"
+                  if phase_times[fk]
+                  else "—"
+              )
+              lines.append(
+                  f"| {femo} **{fname}** | {d_str} | {month_lbl} Phase | {t_str} |"
+              )
 
           table = "\n".join(lines) + "\n"
 
