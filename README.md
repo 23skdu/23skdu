@@ -1,4 +1,14 @@
-## Hi there 👋
+# Hi there 👋
+
+[![Lint](https://github.com/23skdu/23skdu/actions/workflows/lint.yml/badge.svg)](https://github.com/23skdu/23skdu/actions/workflows/lint.yml)
+
+## About
+
+I'm a software engineer who builds high-performance systems and developer tooling.
+Recent work spans a clustered vector engine for agent memory (Go, Apache Arrow Flight),
+protocols for detecting rogue AI/agentic systems, a universal primitive for continuous
+mathematics, and ML tooling for cloud log anomaly detection. I work primarily in Go,
+with C++ and Python, and enjoy shipping opinionated infrastructure and tools.
 
 <!--
 **23skdu/23skdu** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
@@ -7,7 +17,7 @@ Here are some ideas to get you started:
 
 - 🔭 I’m currently working on ...
 - 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
+- 👯 I’m collaborating on ...
 - 🤔 I’m looking for help with ...
 - 💬 Ask me about ...
 - 📫 How to reach me: ...
