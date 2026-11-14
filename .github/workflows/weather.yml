@@ -6,13 +6,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   weather:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch 5-day forecast for Seattle
+      - uses: actions/checkout@v7
+      - name: Update Seattle temperature badge
         run: |
           python3 - <<'PY'
           import json
@@ -21,17 +22,31 @@ jobs:
               "https://api.open-meteo.com/v1/forecast"
               "?latitude=47.6062"
               "&longitude=-122.3321"
-              "&daily=temperature_2m_max,temperature_2m_min,weathercode"
-              "&timezone=America%2FLos_Angeles"
-              "&forecast_days=5"
+              "&current=temperature_2m"
+              "&temperature_unit=fahrenheit"
           )
           with urllib.request.urlopen(url) as response:
               data = json.load(response)
-          daily = data["daily"]
-          for date, hi, lo in zip(
-              daily["time"],
-              daily["temperature_2m_max"],
-              daily["temperature_2m_min"],
-          ):
-              print(f"{date}: high {hi}C, low {lo}C")
+          temp = round(data["current"]["temperature_2m"])
+          badge = {
+              "schemaVersion": 1,
+              "label": "Seattle",
+              "message": f"{temp} F",
+              "color": "blue",
+          }
+          with open("weather.json", "w") as f:
+              json.dump(badge, f, indent=2)
+              f.write("\n")
+          print(f"Seattle current temp: {temp} F")
           PY
+      - name: Commit badge update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add weather.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update Seattle weather badge [skip ci]"
+            git push
+          fi
