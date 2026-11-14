@@ -122,8 +122,8 @@ jobs:
             icon="❓"
           fi
 
-          # Sanitize for Mermaid
-          condition="$(printf '%s' "$condition" | tr -d '"`')"
+          # Sanitize for Markdown
+          condition="$(printf '%s' "$condition" | tr -d '"`|')"
 
           TEMP="$temp" CONDITION="$condition" ICON="$icon" \
             FORECAST_FILE="$forecast_file" python3 - <<'PY'
@@ -145,74 +145,36 @@ jobs:
               forecast_lines = []
 
           forecast_lines = forecast_lines[:3]
+          badges = ["🔴", "🟢", "🔴"]
 
-          def format_card(entry):
-              safe = entry.replace('"', "")
+          lines = [
+              "**🎄✨ Seattle Weather · `47.6062 N, 122.3321 W` ✨🎄**",
+              "",
+              "| 🎁 Day | 🌡️ Temp | ❄️ Forecast |",
+              "| :--- | :---: | :--- |",
+              f"| 🌟 **Now** | **{temp} F** | {icon} {condition} |",
+          ]
+          for idx, entry in enumerate(forecast_lines):
+              safe = entry.replace('"', "").replace("|", "")
               parts = safe.split("\t")
+              badge = badges[idx % len(badges)]
               if len(parts) == 3:
                   day, temps, cond = parts
-                  return f"{day} · {temps}\\n{cond}"
-              return safe
+                  temps = temps.replace(" ", "")
+                  if temps.endswith("F"):
+                      temps = temps[:-1] + " F"
+                  lines.append(f"| {badge} **{day}** | `{temps}` | {cond} |")
+              else:
+                  lines.append(f"| {badge} **Forecast** | — | {safe} |")
 
-          cards = [format_card(entry) for entry in forecast_lines]
-          init_cfg = "{'flowchart': {'nodeSpacing': 10, 'rankSpacing': 8, 'padding': 6}}"
-          lines = [
-              "```mermaid",
-              f"%%{{init: {init_cfg}}}%%",
-              "flowchart TB",
-              '    subgraph top[" "]',
-              '        T["🎄 Seattle · 47.6062 N, 122.3321 W"]',
-              "    end",
-              '    subgraph r1[" "]',
-              "        direction LR",
-              f'        N["{icon} Now: {temp} F\\n{condition}"]',
-          ]
-          if len(cards) >= 1:
-              lines.append(f'        D1["{cards[0]}"]')
-              lines.append("        N ~~~ D1")
-          lines.append("    end")
-          if len(cards) >= 2:
-              lines.extend([
-                  '    subgraph r2[" "]',
-                  "        direction LR",
-                  f'        D2["{cards[1]}"]',
-              ])
-              if len(cards) >= 3:
-                  lines.append(f'        D3["{cards[2]}"]')
-                  lines.append("        D2 ~~~ D3")
-              lines.append("    end")
-              lines.append("    top ~~~ r1 ~~~ r2")
-          else:
-              lines.append("    top ~~~ r1")
-
-          lines.extend([
-              "    classDef hdr fill:#B45309,stroke:#FCD34D,stroke-width:2px,color:#FFFBEB",
-              "    classDef red fill:#B91C1C,stroke:#FBBF24,stroke-width:2px,color:#FFFBEB",
-              "    classDef grn fill:#166534,stroke:#FBBF24,stroke-width:2px,color:#ECFDF5",
-              "    class T hdr",
-          ])
-          red_nodes = ["N"] + (["D3"] if len(cards) >= 3 else [])
-          grn_nodes = (["D1"] if len(cards) >= 1 else []) + (
-              ["D2"] if len(cards) >= 2 else []
-          )
-          lines.append("    class " + ",".join(red_nodes) + " red")
-          if grn_nodes:
-              lines.append("    class " + ",".join(grn_nodes) + " grn")
-          lines.extend([
-              "    style top fill:none,stroke:none",
-              "    style r1 fill:none,stroke:none",
-          ])
-          if len(cards) >= 2:
-              lines.append("    style r2 fill:none,stroke:none")
-          lines.append("```")
-          diagram = "\n".join(lines) + "\n"
+          table = "\n".join(lines) + "\n"
 
           path = "README.md"
           with open(path, encoding="utf-8") as handle:
               content = handle.read()
 
           pattern = re.compile(r"<!-- weather:start -->.*?<!-- weather:end -->", re.S)
-          replacement = "<!-- weather:start -->\n" + diagram + "<!-- weather:end -->"
+          replacement = "<!-- weather:start -->\n" + table + "<!-- weather:end -->"
           content, count = pattern.subn(lambda _match: replacement, content)
           if count == 0:
               content = content.rstrip() + "\n\n" + replacement + "\n"
