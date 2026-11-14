@@ -3,4 +3,4 @@
 
 ## About
 
-I'm a DevOps/SRE engineer who builds high-performance systems and developer tooling, with a focus on observability
+I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and developer tooling, with a focus on observability
