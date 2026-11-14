@@ -17,6 +17,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import json
+          import re
           import urllib.request
           url = (
               "https://api.open-meteo.com/v1/forecast"
@@ -28,22 +29,23 @@ jobs:
           with urllib.request.urlopen(url, timeout=30) as response:
               data = json.load(response)
           temp = round(data["current"]["temperature_2m"])
-          badge = {
-              "schemaVersion": 1,
-              "label": "Seattle",
-              "message": f"{temp} F",
-              "color": "blue",
-          }
-          with open("weather.json", "w") as f:
-              json.dump(badge, f, indent=2)
-              f.write("\n")
+          badge_url = f"https://img.shields.io/badge/Seattle-{temp}_F-blue"
+          with open("README.md") as f:
+              content = f.read()
+          content = re.sub(
+              r"https://img\.shields\.io/badge/Seattle-[^)]*",
+              badge_url,
+              content,
+          )
+          with open("README.md", "w") as f:
+              f.write(content)
           print(f"Seattle current temp: {temp} F")
           PY
       - name: Commit badge update
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add weather.json
+          git add README.md
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
