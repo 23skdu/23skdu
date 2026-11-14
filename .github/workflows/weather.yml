@@ -28,11 +28,11 @@ jobs:
           )
           with urllib.request.urlopen(url, timeout=30) as response:
               data = json.load(response)
-          from datetime import date
+          import time
           temp = round(data["current"]["temperature_2m"])
           badge_url = (
               f"https://img.shields.io/badge/Seattle-{temp}_F-blue"
-              f"?d={date.today().isoformat()}"
+              f"?t={int(time.time())}"
           )
           with open("README.md") as f:
               content = f.read()
