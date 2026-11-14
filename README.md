@@ -2,10 +2,10 @@
 ```mermaid
 flowchart LR
     T["🌲 Seattle Weather\n47.6062 N, 122.3321 W"]
-    N["🌧️ Now: 55 F\nLight drizzle"]
-    D1["Sat 55/48 F 🌧️ Light rain shower"]
-    D2["Sun 54/45 F 🌧️ Light rain shower"]
-    D3["Mon 51/42 F 🌧️ Patchy rain nearby"]
+    N["🌤️ Now: 55 F\nPartly cloudy"]
+    D1["Sun 51/42 F 🌦️ Drizzle"]
+    D2["Mon 52/41 F 🌦️ Drizzle"]
+    D3["Tue 50/41 F 🌤️ Partly cloudy"]
     T --> N --> D1 --> D2 --> D3
 ```
 <!-- weather:end -->
