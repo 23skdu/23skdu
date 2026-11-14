@@ -20,6 +20,8 @@ jobs:
           temp=""
           condition=""
           icon="🌡️"
+          today_sunrise=""
+          today_sunset=""
           forecast_file="$(mktemp)"
           : > "$forecast_file"
 
@@ -55,7 +57,7 @@ jobs:
           weather_url="https://api.open-meteo.com/v1/forecast?latitude=47.6062"
           weather_url="$weather_url&longitude=-122.3321"
           weather_url="$weather_url&current=temperature_2m,weather_code"
-          weather_url="$weather_url&daily=temperature_2m_max,temperature_2m_min,weather_code"
+          weather_url="$weather_url&daily=temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset"
           weather_url="$weather_url&forecast_days=4"
           weather_url="$weather_url&timezone=America%2FLos_Angeles"
           weather_url="$weather_url&temperature_unit=fahrenheit"
@@ -68,21 +70,25 @@ jobs:
               weather_meta "$code"
               condition="$W_COND"
               icon="$W_ICON"
+              today_sunrise="$(printf '%s' "$primary" | jq -r '.daily.sunrise[0] // empty' 2>/dev/null || true)"
+              today_sunset="$(printf '%s' "$primary" | jq -r '.daily.sunset[0] // empty' 2>/dev/null || true)"
               printf '%s' "$primary" | jq -r '
                 .daily.time as $dates |
                 .daily.temperature_2m_max as $maxs |
                 .daily.temperature_2m_min as $mins |
                 .daily.weather_code as $codes |
+                .daily.sunrise as $rises |
+                .daily.sunset as $sets |
                 [range(1;4)] | .[] |
-                "\($dates[.])\t\($maxs[.])\t\($mins[.])\t\($codes[.])"
-              ' 2>/dev/null | while IFS="$(printf '\t')" read -r d hi lo c; do
+                "\($dates[.])\t\($maxs[.])\t\($mins[.])\t\($codes[.])\t\($rises[.])\t\($sets[.])"
+              ' 2>/dev/null | while IFS="$(printf '\t')" read -r d hi lo c sr ss; do
                 [ -z "$d" ] && continue
                 day="$(date -d "$d" +%a 2>/dev/null || printf '%s' "$d")"
                 hi_r="$(printf '%.0f' "$hi" 2>/dev/null || printf '%s' "$hi")"
                 lo_r="$(printf '%.0f' "$lo" 2>/dev/null || printf '%s' "$lo")"
                 weather_meta "$c"
-                printf '%s\t%s/%s F\t%s %s\n' \
-                  "$day" "$hi_r" "$lo_r" "$W_ICON" "$W_COND" >> "$forecast_file"
+                printf '%s\t%s/%s F\t%s %s\t%s\t%s\n' \
+                  "$day" "$hi_r" "$lo_r" "$W_ICON" "$W_COND" "$sr" "$ss" >> "$forecast_file"
               done
             fi
           fi
@@ -99,17 +105,28 @@ jobs:
                 temp="$(printf '%.0f' "$t" 2>/dev/null || printf '%s' "$t")"
                 condition="${ctext:-Unknown}"
                 icon="$(icon_for_condition "$condition")"
+                sr_filter='.weather[0].astronomy[0].sunrise // empty'
+                ss_filter='.weather[0].astronomy[0].sunset // empty'
+                today_sunrise="$(printf '%s' "$fallback" | jq -r "$sr_filter" 2>/dev/null || true)"
+                today_sunset="$(printf '%s' "$fallback" | jq -r "$ss_filter" 2>/dev/null || true)"
                 printf '%s' "$fallback" | jq -r '
                   .weather[] |
-                  "\(.date)\t\(.maxtempF)\t\(.mintempF)\t\(.hourly[4].weatherDesc[0].value)"
-                ' 2>/dev/null | while IFS="$(printf '\t')" read -r d hi lo fc; do
+                  [
+                    .date,
+                    .maxtempF,
+                    .mintempF,
+                    .hourly[4].weatherDesc[0].value,
+                    (.astronomy[0].sunrise // ""),
+                    (.astronomy[0].sunset // "")
+                  ] | @tsv
+                ' 2>/dev/null | while IFS="$(printf '\t')" read -r d hi lo fc sr ss; do
                   [ -z "$d" ] && continue
                   day="$(date -d "$d" +%a 2>/dev/null || printf '%s' "$d")"
                   hi_r="$(printf '%.0f' "$hi" 2>/dev/null || printf '%s' "$hi")"
                   lo_r="$(printf '%.0f' "$lo" 2>/dev/null || printf '%s' "$lo")"
                   ficon="$(icon_for_condition "$fc")"
-                  printf '%s\t%s/%s F\t%s %s\n' \
-                    "$day" "$hi_r" "$lo_r" "$ficon" "${fc:-Unknown}" >> "$forecast_file"
+                  printf '%s\t%s/%s F\t%s %s\t%s\t%s\n' \
+                    "$day" "$hi_r" "$lo_r" "$ficon" "${fc:-Unknown}" "$sr" "$ss" >> "$forecast_file"
                 done
               fi
             fi
@@ -126,46 +143,379 @@ jobs:
           condition="$(printf '%s' "$condition" | tr -d '"`|')"
 
           TEMP="$temp" CONDITION="$condition" ICON="$icon" \
+            TODAY_SUNRISE="$today_sunrise" TODAY_SUNSET="$today_sunset" \
             FORECAST_FILE="$forecast_file" python3 - <<'PY'
+          import calendar
+          import datetime
+          import math
           import os
           import re
+          from zoneinfo import ZoneInfo
+
+          LAT = 47.6062
+          LON = -122.3321
+          TZ = ZoneInfo("America/Los_Angeles")
+
+          SIGNS = [
+              ("♈", "Aries"), ("♉", "Taurus"), ("♊", "Gemini"),
+              ("♋", "Cancer"), ("♌", "Leo"), ("♍", "Virgo"),
+              ("♎", "Libra"), ("♏", "Scorpio"), ("♐", "Sagittarius"),
+              ("♑", "Capricorn"), ("♒", "Aquarius"), ("♓", "Pisces"),
+          ]
+
+          def ordinal(n):
+              if 11 <= (n % 100) <= 13:
+                  return f"{n}th"
+              return f"{n}{ {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th') }"
+
+          def fmt_short_time(dt):
+              if dt is None:
+                  return "—"
+              ampm = "a" if dt.hour < 12 else "p"
+              hr = dt.hour % 12 or 12
+              return f"{hr}:{dt.minute:02d}{ampm}"
+
+          def parse_api_time(raw, fallback_dt):
+              s = (raw or "").strip()
+              if not s:
+                  return fmt_short_time(fallback_dt)
+              m = re.search(r"T(\d{2}):(\d{2})", s)
+              if m:
+                  h, mn = int(m.group(1)), int(m.group(2))
+                  ampm = "a" if h < 12 else "p"
+                  return f"{h % 12 or 12}:{mn:02d}{ampm}"
+              m = re.match(r"(\d{1,2}):(\d{2})\s*([AP]M)", s, re.I)
+              if m:
+                  h, mn, ap = int(m.group(1)), int(m.group(2)), m.group(3).lower()[0]
+                  return f"{h}:{mn:02d}{ap}"
+              return fmt_short_time(fallback_dt)
+
+          def sun_times_noaa(date_obj):
+              noon = datetime.datetime(
+                  date_obj.year, date_obj.month, date_obj.day, 12, 0, tzinfo=TZ
+              )
+              jd = noon.astimezone(datetime.timezone.utc).timestamp() / 86400.0 + 2440587.5
+              n = round(jd - 2451545.0 - 0.0009 - (-LON / 360.0))
+              j_star = 2451545.0 + 0.0009 + (-LON / 360.0) + n
+              m = math.radians((357.5291 + 0.98560028 * (j_star - 2451545.0)) % 360.0)
+              c = 1.9148 * math.sin(m) + 0.0200 * math.sin(2 * m) + 0.0003 * math.sin(3 * m)
+              lam = math.radians((math.degrees(m) + c + 282.9372) % 360.0)
+              j_tr = j_star + 0.0053 * math.sin(m) - 0.0069 * math.sin(2 * lam)
+              sin_d = math.sin(lam) * math.sin(math.radians(23.44))
+              cos_d = math.cos(math.asin(sin_d))
+              lat_r = math.radians(LAT)
+              cos_w = (
+                  (math.sin(math.radians(-0.833)) - math.sin(lat_r) * sin_d)
+                  / (math.cos(lat_r) * cos_d)
+              )
+              if cos_w > 1.0 or cos_w < -1.0:
+                  return None, None
+              w0 = math.degrees(math.acos(cos_w)) / 360.0
+              to_loc = lambda j: datetime.datetime.fromtimestamp(
+                  (j - 2440587.5) * 86400.0, tz=datetime.timezone.utc
+              ).astimezone(TZ)
+              return to_loc(j_tr - w0), to_loc(j_tr + w0)
+
+          def sun_lon(jd):
+              t = (jd - 2451545.0) / 36525.0
+              l0 = (280.46646 + 36000.76983 * t + 0.0003032 * t * t) % 360.0
+              m = math.radians((357.52911 + 35999.05029 * t - 0.0001537 * t * t) % 360.0)
+              c = (
+                  (1.914602 - 0.004817 * t - 0.000014 * t * t) * math.sin(m)
+                  + (0.019993 - 0.000101 * t) * math.sin(2 * m)
+                  + 0.000289 * math.sin(3 * m)
+              )
+              return (l0 + c) % 360.0
+
+          def moon_lon(jd):
+              t = (jd - 2451545.0) / 36525.0
+              t2, t3, t4 = t * t, t * t * t, t * t * t * t
+              lp = (218.3164477 + 481267.88123421 * t - 0.0015786 * t2
+                    + t3 / 538841.0 - t4 / 65194000.0) % 360.0
+              d = math.radians((297.8501921 + 445267.1114034 * t - 0.0018819 * t2
+                                + t3 / 545868.0 - t4 / 113065000.0) % 360.0)
+              m = math.radians((357.5291092 + 35999.0502909 * t - 0.0001536 * t2
+                                + t3 / 24490000.0) % 360.0)
+              mp = math.radians((134.9633964 + 477198.8675055 * t + 0.0087414 * t2
+                                 + t3 / 69699.0 - t4 / 14712000.0) % 360.0)
+              f = math.radians((93.2720950 + 483202.0175233 * t - 0.0036539 * t2
+                                - t3 / 3526000.0 + t4 / 863310000.0) % 360.0)
+              e = 1.0 - 0.002516 * t - 0.0000074 * t2
+              dl = (
+                  6288774 * math.sin(mp) + 1274027 * math.sin(2 * d - mp)
+                  + 658314 * math.sin(2 * d) + 213618 * math.sin(2 * mp)
+                  - 185116 * e * math.sin(m) - 114332 * math.sin(2 * f)
+                  + 58793 * math.sin(2 * d - 2 * mp) + 57066 * e * math.sin(2 * d - m - mp)
+                  + 53322 * math.sin(2 * d + mp) + 45758 * e * math.sin(2 * d - m)
+                  - 40923 * e * math.sin(m - mp) - 34720 * math.sin(d)
+                  - 30383 * e * math.sin(m + mp) + 15327 * math.sin(2 * d - 2 * f)
+                  - 12528 * math.sin(mp + 2 * f) + 10980 * math.sin(mp - 2 * f)
+                  + 10675 * math.sin(4 * d - mp) + 10034 * math.sin(3 * mp)
+                  + 8548 * math.sin(4 * d - 2 * mp) - 7888 * e * math.sin(2 * d + m - mp)
+                  - 6766 * e * math.sin(2 * d + m) - 5163 * math.sin(d - mp)
+                  + 4987 * e * math.sin(d + m) + 4036 * e * math.sin(2 * d - m + mp)
+              ) / 1e6
+              return (lp + dl) % 360.0
+
+          def placidus_houses(dt_utc):
+              jd = dt_utc.timestamp() / 86400.0 + 2440587.5
+              t = (jd - 2451545.0) / 36525.0
+              eps = math.radians(23.4392911 - 0.0130042 * t)
+              gmst = (280.46061837 + 360.98564736629 * (jd - 2451545.0)
+                      + 0.000387933 * t * t - (t ** 3) / 38710000.0) % 360.0
+              ramc = (gmst + LON) % 360.0
+              ramc_r = math.radians(ramc)
+              lat_r = math.radians(LAT)
+
+              def ra_to_ecl(ra_deg):
+                  ra_r = math.radians(ra_deg)
+                  return math.degrees(
+                      math.atan2(math.sin(ra_r), math.cos(ra_r) * math.cos(eps))
+                  ) % 360.0
+
+              mc = ra_to_ecl(ramc)
+              asc = math.degrees(math.atan2(
+                  math.cos(ramc_r),
+                  -(math.sin(eps) * math.tan(lat_r) + math.cos(eps) * math.sin(ramc_r)),
+              )) % 360.0
+
+              def iter_cusp(offset, factor, diurnal):
+                  ra = (ramc + offset) % 360.0
+                  for _ in range(40):
+                      ecl = math.radians(ra_to_ecl(ra))
+                      dec = math.asin(math.sin(eps) * math.sin(ecl))
+                      ad = math.asin(max(-0.999999, min(0.999999, math.tan(lat_r) * math.tan(dec))))
+                      if diurnal:
+                          ra = (ramc + math.degrees(factor * (math.radians(90.0) + ad))) % 360.0
+                      else:
+                          ra = (ramc + 180.0 - math.degrees(factor * (math.radians(90.0) - ad))) % 360.0
+                  return ra_to_ecl(ra)
+
+              c1 = asc
+              c2 = iter_cusp(120.0, 2.0 / 3.0, False)
+              c3 = iter_cusp(150.0, 1.0 / 3.0, False)
+              c4 = (mc + 180.0) % 360.0
+              c5 = (iter_cusp(30.0, 1.0 / 3.0, True) + 180.0) % 360.0
+              c6 = (iter_cusp(60.0, 2.0 / 3.0, True) + 180.0) % 360.0
+              return [
+                  c1, c2, c3, c4, c5, c6,
+                  (c1 + 180.0) % 360.0, (c2 + 180.0) % 360.0, (c3 + 180.0) % 360.0,
+                  mc, (c5 + 180.0) % 360.0, (c6 + 180.0) % 360.0,
+              ]
+
+          def which_house(lon_deg, cusps):
+              for i in range(12):
+                  start, end = cusps[i], cusps[(i + 1) % 12]
+                  if (lon_deg - start) % 360.0 < (end - start) % 360.0:
+                      return i + 1
+              return 1
+
+          def moon_phase_jde(k):
+              t = k / 1236.85
+              t2, t3, t4 = t * t, t * t * t, t * t * t * t
+              jde = (2451550.09766 + 29.530588861 * k
+                     + 0.00015437 * t2 - 0.000000150 * t3 + 0.00000000073 * t4)
+              e = 1 - 0.002516 * t - 0.0000074 * t2
+              m = math.radians((2.5534 + 29.10535670 * k - 0.0000014 * t2 - 0.00000011 * t3) % 360)
+              mp = math.radians((201.5643 + 385.81693528 * k + 0.0107582 * t2
+                                 + 0.00001238 * t3 - 0.000000058 * t4) % 360)
+              f = math.radians((160.7108 + 390.67050284 * k - 0.0016118 * t2
+                                - 0.00000227 * t3 + 0.000000011 * t4) % 360)
+              om = math.radians((124.7746 - 1.56375588 * k + 0.0020672 * t2 + 0.00000215 * t3) % 360)
+              frac = k - math.floor(k)
+              if abs(frac) < 1e-9 or abs(frac - 0.5) < 1e-9:
+                  c_mp = -0.40720 if abs(frac) < 1e-9 else -0.40614
+                  c_m = 0.17241 if abs(frac) < 1e-9 else 0.17302
+                  c_2mp = 0.01608 if abs(frac) < 1e-9 else 0.01614
+                  c_2f = 0.01039 if abs(frac) < 1e-9 else 0.01043
+                  c_mpm = 0.00739 if abs(frac) < 1e-9 else 0.00734
+                  c_mpp = -0.00514 if abs(frac) < 1e-9 else -0.00515
+                  c_2m = 0.00208 if abs(frac) < 1e-9 else 0.00209
+                  corr = (
+                      c_mp * math.sin(mp) + c_m * e * math.sin(m)
+                      + c_2mp * math.sin(2 * mp) + c_2f * math.sin(2 * f)
+                      + c_mpm * e * math.sin(mp - m) + c_mpp * e * math.sin(mp + m)
+                      + c_2m * e * e * math.sin(2 * m) - 0.00111 * math.sin(mp - 2 * f)
+                      - 0.00057 * math.sin(mp + 2 * f) + 0.00056 * e * math.sin(2 * mp + m)
+                      - 0.00042 * math.sin(3 * mp) + 0.00042 * e * math.sin(m + 2 * f)
+                      + 0.00038 * e * math.sin(m - 2 * f) - 0.00024 * e * math.sin(2 * mp - m)
+                      - 0.00017 * math.sin(om) - 0.00007 * math.sin(mp + 2 * m)
+                  )
+              else:
+                  w = (0.00306 - 0.00038 * e * math.cos(m) + 0.00026 * math.cos(mp)
+                       - 0.00002 * math.cos(mp - m) + 0.00002 * math.cos(mp + m)
+                       + 0.00002 * math.cos(2 * f))
+                  corr = (
+                      -0.62801 * math.sin(mp) + 0.17172 * e * math.sin(m)
+                      - 0.01183 * e * math.sin(mp + m) + 0.00862 * math.sin(2 * mp)
+                      + 0.00804 * math.sin(2 * f) + 0.00454 * e * math.sin(mp - m)
+                      + 0.00204 * e * e * math.sin(2 * m) - 0.00180 * math.sin(mp - 2 * f)
+                      - 0.00070 * math.sin(mp + 2 * f) - 0.00040 * math.sin(3 * mp)
+                      - 0.00034 * e * math.sin(2 * mp - m) + 0.00032 * e * math.sin(m + 2 * f)
+                      + 0.00032 * e * math.sin(m - 2 * f) - 0.00028 * e * e * math.sin(mp + 2 * m)
+                      + 0.00027 * e * math.sin(2 * mp + m) - 0.00017 * math.sin(om)
+                  )
+                  corr += w if abs(frac - 0.25) < 1e-9 else -w
+              return jde + corr
+
+          def calendar_emo(deg):
+              if deg < 90.0:
+                  return "🌒"
+              if deg < 180.0:
+                  return "🌔"
+              if deg < 270.0:
+                  return "🌖"
+              return "🌘"
+
+          def phase_info(deg):
+              idx = int(((deg + 22.5) % 360.0) // 45.0)
+              return [
+                  ("🌑", "New Moon"), ("🌒", "Waxing Crescent"),
+                  ("🌓", "First Quarter"), ("🌔", "Waxing Gibbous"),
+                  ("🌕", "Full Moon"), ("🌖", "Waning Gibbous"),
+                  ("🌗", "Last Quarter"), ("🌘", "Waning Crescent"),
+              ][idx]
+
+          now_utc = datetime.datetime.now(datetime.timezone.utc)
+          now_loc = now_utc.astimezone(TZ)
+          today_d = now_loc.date()
+          now_jd = now_utc.timestamp() / 86400.0 + 2440587.5
 
           temp = os.environ["TEMP"]
           condition = os.environ["CONDITION"]
           icon = os.environ["ICON"]
+          today_sr_raw = os.environ.get("TODAY_SUNRISE", "")
+          today_ss_raw = os.environ.get("TODAY_SUNSET", "")
           forecast_path = os.environ["FORECAST_FILE"]
 
           forecast_lines = []
           try:
               with open(forecast_path, encoding="utf-8") as handle:
-                  forecast_lines = [
-                      line.rstrip("\n") for line in handle if line.strip()
-                  ]
+                  forecast_lines = [line.rstrip("\n") for line in handle if line.strip()]
           except OSError:
               forecast_lines = []
 
           forecast_lines = forecast_lines[:3]
-          badges = ["🔴", "🟢", "🔴"]
+          badges = ["🔔", "🔴", "🟢"]
+          day_badges = {
+              "Sun": "🔔", "Mon": "🔴", "Tue": "🟢", "Wed": "⛄",
+              "Thu": "🕯️", "Fri": "🦌", "Sat": "🧣",
+          }
+          sr0, ss0 = sun_times_noaa(today_d)
+          sr0_s = parse_api_time(today_sr_raw, sr0)
+          ss0_s = parse_api_time(today_ss_raw, ss0)
 
           lines = [
-              "**🎄✨ Seattle Weather · `47.6062 N, 122.3321 W` ✨🎄**",
+              "## 🎄✨ Seattle Weather · `47.6062 N, 122.3321 W` ✨🎄",
               "",
-              "| 🎁 Day | 🌡️ Temp | ❄️ Forecast |",
-              "| :--- | :---: | :--- |",
-              f"| 🌟 **Now** | **{temp} F** | {icon} {condition} |",
+              "| 🎁 Day | 🌡️ Temp | ❄️ Forecast | 🌅 Sun (Rise / Set) |",
+              "| :--- | :---: | :--- | :---: |",
+              f"| 🌟 **Now** | **{temp} F** | {icon} {condition} | `{sr0_s}` / `{ss0_s}` |",
           ]
           for idx, entry in enumerate(forecast_lines):
               safe = entry.replace('"', "").replace("|", "")
               parts = safe.split("\t")
               badge = badges[idx % len(badges)]
-              if len(parts) == 3:
-                  day, temps, cond = parts
+              sr_f, ss_f = sun_times_noaa(today_d + datetime.timedelta(days=idx + 1))
+              if len(parts) >= 3:
+                  day, temps, cond = parts[0], parts[1], parts[2]
+                  badge = day_badges.get(day, badge)
+                  sr_raw = parts[3] if len(parts) > 3 else ""
+                  ss_raw = parts[4] if len(parts) > 4 else ""
+                  sr_s = parse_api_time(sr_raw, sr_f)
+                  ss_s = parse_api_time(ss_raw, ss_f)
                   temps = temps.replace(" ", "")
                   if temps.endswith("F"):
                       temps = temps[:-1] + " F"
-                  lines.append(f"| {badge} **{day}** | `{temps}` | {cond} |")
+                  lines.append(
+                      f"| {badge} **{day}** | `{temps}` | {cond} | `{sr_s}` / `{ss_s}` |"
+                  )
               else:
-                  lines.append(f"| {badge} **Forecast** | — | {safe} |")
+                  lines.append(
+                      f"| {badge} **Forecast** | — | {safe} | `{fmt_short_time(sr_f)}` / "
+                      f"`{fmt_short_time(ss_f)}` |"
+                  )
+
+          cusps = placidus_houses(now_utc)
+          s_lon = sun_lon(now_jd)
+          m_lon = moon_lon(now_jd)
+          s_sym, s_name = SIGNS[int(s_lon // 30) % 12]
+          m_sym, m_name = SIGNS[int(m_lon // 30) % 12]
+          s_house = ordinal(which_house(s_lon, cusps))
+          m_house = ordinal(which_house(m_lon, cusps))
+          p_deg = (m_lon - s_lon) % 360.0
+          illum = round((1.0 - math.cos(math.radians(p_deg))) * 50.0)
+          p_emo, p_name = phase_info(p_deg)
+          now_lbl = now_loc.strftime("%b %-d, %-I:%M %p %Z")
+
+          lines.extend([
+              "",
+              f"### ✨🕯️ Sky & Houses · `{now_lbl}` (Placidus) 🕯️✨",
+              "",
+              "| Body | Zodiac Sign | House | Illumination / Daylight |",
+              "| :--- | :--- | :---: | :--- |",
+              f"| ☀️ **Sun** | {s_sym} {s_name} ({int(s_lon % 30)}°) | **{s_house} House** | "
+              f"Daylight `{sr0_s}` – `{ss0_s}` |",
+              f"| 🌙 **Moon** | {m_sym} {m_name} ({int(m_lon % 30)}°) | **{m_house} House** | "
+              f"{p_emo} {p_name} ({illum}%) |",
+          ])
+
+          y_dec = now_loc.year + (now_loc.month - 0.5) / 12.0
+          k0 = math.floor((y_dec - 2000.0) * 12.3685) - 2
+          primary_by_day = {}
+          phase_lists = {0.0: [], 0.25: [], 0.5: [], 0.75: []}
+          phase_emojis = {0.0: "🌑", 0.25: "🌓", 0.5: "🌕", 0.75: "🌗"}
+          for dk in range(16):
+              k = k0 + dk * 0.25
+              jde = moon_phase_jde(k)
+              unix = (jde - 2440587.5) * 86400.0 - 69.0
+              dt_loc = datetime.datetime.fromtimestamp(
+                  unix, tz=datetime.timezone.utc
+              ).astimezone(TZ)
+              if dt_loc.year == now_loc.year and dt_loc.month == now_loc.month:
+                  frac = round((k - math.floor(k)) * 4) / 4.0
+                  primary_by_day[dt_loc.day] = phase_emojis[frac]
+                  phase_lists[frac].append(
+                      f"{dt_loc.strftime('%b %-d')} · `{fmt_short_time(dt_loc)}`"
+                  )
+
+          cal = calendar.Calendar(firstweekday=6)
+          month_title = now_loc.strftime("%B %Y")
+          lines.extend([
+              "",
+              f"### 🌙🎄 {month_title} Moon Phases · Seattle 🎄🌙",
+              "",
+              "| Sun | Mon | Tue | Wed | Thu | Fri | Sat |",
+              "| :---: | :---: | :---: | :---: | :---: | :---: | :---: |",
+          ])
+          for week in cal.monthdayscalendar(now_loc.year, now_loc.month):
+              cells = []
+              for day_num in week:
+                  if day_num == 0:
+                      cells.append("")
+                  else:
+                      if day_num in primary_by_day:
+                          emo = primary_by_day[day_num]
+                      else:
+                          noon = datetime.datetime(
+                              now_loc.year, now_loc.month, day_num, 12, 0, tzinfo=TZ
+                          ).astimezone(datetime.timezone.utc)
+                          jd_d = noon.timestamp() / 86400.0 + 2440587.5
+                          emo = calendar_emo((moon_lon(jd_d) - sun_lon(jd_d)) % 360.0)
+                      cell = f"{day_num} {emo}"
+                      cells.append(f"**{cell}**" if day_num == now_loc.day else cell)
+              row = "|".join(f" {c} " if c else " " for c in cells)
+              lines.append(f"|{row}|")
+
+          lines.extend([
+              "",
+              "| 🌑 New Moon | 🌓 First Quarter | 🌕 Full Moon | 🌗 Last Quarter |",
+              "| :---: | :---: | :---: | :---: |",
+              "| " + " | ".join(
+                  ", ".join(phase_lists[k]) if phase_lists[k] else "—"
+                  for k in (0.0, 0.25, 0.5, 0.75)
+              ) + " |",
+          ])
 
           table = "\n".join(lines) + "\n"
 
