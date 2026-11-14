@@ -1,0 +1,37 @@
+name: Seattle Weather
+
+on:
+  schedule:
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  weather:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch 5-day forecast for Seattle
+        run: |
+          python3 - <<'PY'
+          import json
+          import urllib.request
+          url = (
+              "https://api.open-meteo.com/v1/forecast"
+              "?latitude=47.6062"
+              "&longitude=-122.3321"
+              "&daily=temperature_2m_max,temperature_2m_min,weathercode"
+              "&timezone=America%2FLos_Angeles"
+              "&forecast_days=5"
+          )
+          with urllib.request.urlopen(url) as response:
+              data = json.load(response)
+          daily = data["daily"]
+          for date, hi, lo in zip(
+              daily["time"],
+              daily["temperature_2m_max"],
+              daily["temperature_2m_min"],
+          ):
+              print(f"{date}: high {hi}C, low {lo}C")
+          PY
