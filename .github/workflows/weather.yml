@@ -159,6 +159,7 @@ jobs:
               ))
           lines.append("    end")
           lines.append("    T --> N")
+          lines.append("    style row fill:none,stroke:none")
           lines.append("```")
           diagram = "\n".join(lines) + "\n"
 
