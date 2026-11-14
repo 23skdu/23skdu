@@ -1,25 +1,18 @@
 <!-- weather:start -->
-## 🎄✨ Seattle Weather · `47.6062 N, 122.3321 W` ✨🎄
+## 🎄✨ Seattle Weather & Sky · `47.6062 N, 122.3321 W` ✨🎄
 
-| 🎁 Day | 🌡️ Temp | ❄️ Forecast | 🌅 Sun (Rise / Set) |
+| 🎁 Item | 🌡️ Reading | ❄️ Details | 🌅 Sun / Timing |
 | :--- | :---: | :--- | :---: |
 | 🌟 **Now** | **56 F** | 🌤️ Partly cloudy | `7:14a` / `4:35p` |
 | 🔔 **Sun** | `51/42 F` | 🌦️ Drizzle | `7:15a` / `4:34p` |
 | 🔴 **Mon** | `52/41 F` | 🌦️ Drizzle | `7:17a` / `4:33p` |
 | 🟢 **Tue** | `50/41 F` | 🌤️ Partly cloudy | `7:18a` / `4:32p` |
-
-### ✨🕯️ Sky & Houses · `Nov 14, 3:23 PM PST` (Placidus) 🕯️✨
-
-| Body | Zodiac Sign | House | Illumination / Daylight |
-| :--- | :--- | :---: | :--- |
-| ☀️ **Sun** | ♏ Scorpio (22°) | **7th House** | Daylight `7:14a` – `4:35p` |
-| 🌙 **Moon** | ♑ Capricorn (25°) | **10th House** | 🌒 Waxing Crescent (27%) |
-
-### 🌙🎄 November 2026 Moon Phases · Seattle 🎄🌙
-
-| 🌑 New Moon | 🌓 First Quarter | 🌕 Full Moon | 🌗 Last Quarter |
-| :---: | :---: | :---: | :---: |
-| Nov 8 · `11:02p` | Nov 17 · `3:48a` | Nov 24 · `6:53a` | Nov 1 · `12:28p`, Nov 30 · `10:09p` |
+| ☀️ **Sun** | ♏ Scorpio `22°` | **7th House** · Placidus | `Nov 14 · 3:35 PM PST` |
+| 🌙 **Moon** | ♑ Capricorn `25°` | **10th House** · 🌒 27% | Waxing Crescent |
+| 🌑 **New Moon** | `Nov 8` | Nov 2026 Phase | `11:02p` PST |
+| 🌓 **First Qtr** | `Nov 17` | Nov 2026 Phase | `3:48a` PST |
+| 🌕 **Full Moon** | `Nov 24` | Nov 2026 Phase | `6:53a` PST |
+| 🌗 **Last Qtr** | `Nov 1` · `Nov 30` | Nov 2026 Phase | `12:28p` · `10:09p` PST |
 <!-- weather:end -->
 
 [![Lint](https://github.com/23skdu/23skdu/actions/workflows/lint.yml/badge.svg)](https://github.com/23skdu/23skdu/actions/workflows/lint.yml)
