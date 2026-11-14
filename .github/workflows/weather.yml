@@ -145,9 +145,11 @@ jobs:
               forecast_lines = []
 
           forecast_lines = forecast_lines[:3]
-          lines = ["```mermaid", "flowchart TD"]
-          lines.append('    T["🌲 Seattle Weather\\n47.6062 N, 122.3321 W"]')
-          lines.append('    subgraph row[" "]')
+          lines = ["```mermaid", "flowchart TB"]
+          lines.append('    subgraph top[" "]')
+          lines.append('        T["🌲 Seattle Weather\\n47.6062 N, 122.3321 W"]')
+          lines.append("    end")
+          lines.append('    subgraph bottom[" "]')
           lines.append("        direction LR")
           lines.append(f'        N["{icon} Now: {temp} F\\n{condition}"]')
           for index, entry in enumerate(forecast_lines, start=1):
@@ -158,8 +160,9 @@ jobs:
                   f"D{index}" for index in range(1, len(forecast_lines) + 1)
               ))
           lines.append("    end")
-          lines.append("    T --> N")
-          lines.append("    style row fill:none,stroke:none")
+          lines.append("    top --> bottom")
+          lines.append("    style top fill:none,stroke:none")
+          lines.append("    style bottom fill:none,stroke:none")
           lines.append("```")
           diagram = "\n".join(lines) + "\n"
 

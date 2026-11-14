@@ -1,8 +1,10 @@
 <!-- weather:start -->
 ```mermaid
-flowchart TD
-    T["🌲 Seattle Weather\n47.6062 N, 122.3321 W"]
-    subgraph row[" "]
+flowchart TB
+    subgraph top[" "]
+        T["🌲 Seattle Weather\n47.6062 N, 122.3321 W"]
+    end
+    subgraph bottom[" "]
         direction LR
         N["🌤️ Now: 55 F\nPartly cloudy"]
         D1["Sun 51/42 F 🌦️ Drizzle"]
@@ -10,8 +12,9 @@ flowchart TD
         D3["Tue 50/41 F 🌤️ Partly cloudy"]
         N --> D1 --> D2 --> D3
     end
-    T --> N
-    style row fill:none,stroke:none
+    top --> bottom
+    style top fill:none,stroke:none
+    style bottom fill:none,stroke:none
 ```
 <!-- weather:end -->
 
