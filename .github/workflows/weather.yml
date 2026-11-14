@@ -145,7 +145,6 @@ jobs:
           TEMP="$temp" CONDITION="$condition" ICON="$icon" \
             TODAY_SUNRISE="$today_sunrise" TODAY_SUNSET="$today_sunset" \
             FORECAST_FILE="$forecast_file" python3 - <<'PY'
-          import calendar
           import datetime
           import math
           import os
@@ -358,15 +357,6 @@ jobs:
                   corr += w if abs(frac - 0.25) < 1e-9 else -w
               return jde + corr
 
-          def calendar_emo(deg):
-              if deg < 90.0:
-                  return "🌒"
-              if deg < 180.0:
-                  return "🌔"
-              if deg < 270.0:
-                  return "🌖"
-              return "🌘"
-
           def phase_info(deg):
               idx = int(((deg + 22.5) % 360.0) // 45.0)
               return [
@@ -462,9 +452,7 @@ jobs:
 
           y_dec = now_loc.year + (now_loc.month - 0.5) / 12.0
           k0 = math.floor((y_dec - 2000.0) * 12.3685) - 2
-          primary_by_day = {}
           phase_lists = {0.0: [], 0.25: [], 0.5: [], 0.75: []}
-          phase_emojis = {0.0: "🌑", 0.25: "🌓", 0.5: "🌕", 0.75: "🌗"}
           for dk in range(16):
               k = k0 + dk * 0.25
               jde = moon_phase_jde(k)
@@ -474,40 +462,14 @@ jobs:
               ).astimezone(TZ)
               if dt_loc.year == now_loc.year and dt_loc.month == now_loc.month:
                   frac = round((k - math.floor(k)) * 4) / 4.0
-                  primary_by_day[dt_loc.day] = phase_emojis[frac]
                   phase_lists[frac].append(
                       f"{dt_loc.strftime('%b %-d')} · `{fmt_short_time(dt_loc)}`"
                   )
 
-          cal = calendar.Calendar(firstweekday=6)
           month_title = now_loc.strftime("%B %Y")
           lines.extend([
               "",
               f"### 🌙🎄 {month_title} Moon Phases · Seattle 🎄🌙",
-              "",
-              "| Sun | Mon | Tue | Wed | Thu | Fri | Sat |",
-              "| :---: | :---: | :---: | :---: | :---: | :---: | :---: |",
-          ])
-          for week in cal.monthdayscalendar(now_loc.year, now_loc.month):
-              cells = []
-              for day_num in week:
-                  if day_num == 0:
-                      cells.append("")
-                  else:
-                      if day_num in primary_by_day:
-                          emo = primary_by_day[day_num]
-                      else:
-                          noon = datetime.datetime(
-                              now_loc.year, now_loc.month, day_num, 12, 0, tzinfo=TZ
-                          ).astimezone(datetime.timezone.utc)
-                          jd_d = noon.timestamp() / 86400.0 + 2440587.5
-                          emo = calendar_emo((moon_lon(jd_d) - sun_lon(jd_d)) % 360.0)
-                      cell = f"{day_num} {emo}"
-                      cells.append(f"**{cell}**" if day_num == now_loc.day else cell)
-              row = "|".join(f" {c} " if c else " " for c in cells)
-              lines.append(f"|{row}|")
-
-          lines.extend([
               "",
               "| 🌑 New Moon | 🌓 First Quarter | 🌕 Full Moon | 🌗 Last Quarter |",
               "| :---: | :---: | :---: | :---: |",
