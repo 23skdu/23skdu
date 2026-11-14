@@ -1,4 +1,4 @@
-[![Seattle](https://img.shields.io/badge/Seattle-53_F-blue)](https://github.com/23skdu/23skdu/actions/workflows/weather.yml)
+[![Seattle](https://img.shields.io/badge/Seattle-53_F-blue?d=2026-11-14)](https://github.com/23skdu/23skdu/actions/workflows/weather.yml)
 [![Lint](https://github.com/23skdu/23skdu/actions/workflows/lint.yml/badge.svg)](https://github.com/23skdu/23skdu/actions/workflows/lint.yml)
 
 ## About
