@@ -7,10 +7,10 @@ I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and d
 <!-- weather:start -->
 ```mermaid
 flowchart LR
-    N["🌡️ Now: updating F\nUnknown"]
-    D1["Day 1: --/-- F 🌡️ Unknown"]
-    D2["Day 2: --/-- F 🌡️ Unknown"]
-    D3["Day 3: --/-- F 🌡️ Unknown"]
+    N["🌧️ Now: 55 F\nLight drizzle"]
+    D1["Sat 55/48 F 🌧️ Light rain shower"]
+    D2["Sun 54/45 F 🌧️ Light rain shower"]
+    D3["Mon 51/42 F 🌧️ Patchy rain nearby"]
     N --> D1 --> D2 --> D3
 ```
 <!-- weather:end -->
