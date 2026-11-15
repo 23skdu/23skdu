@@ -1,3 +1,7 @@
+## About
+
+I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and developer tooling, with a focus on observability
+
 <!-- weather:start -->
 ## 🎄✨ Seattle Weather & Sky · `47.6062 N, 122.3321 W` ✨🎄
 
@@ -16,7 +20,3 @@
 <!-- weather:end -->
 
 [![Lint](https://github.com/23skdu/23skdu/actions/workflows/lint.yml/badge.svg)](https://github.com/23skdu/23skdu/actions/workflows/lint.yml)
-
-## About
-
-I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and developer tooling, with a focus on observability
