@@ -5,9 +5,9 @@ I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and d
 <!-- weather:start -->
 ## 🎄✨ Seattle Weather & Sky · `47.6062 N, 122.3321 W` ✨🎄
 
-| 🎁 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Sun / Timing |
+| 🌌 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Sun / Timing |
 | :--- | :---: | :--- | :---: |
-| 🌟 **Now** | **54 F** | 🌤️ Partly cloudy | `7:13a` / `4:33p` |
+| 🌟 **Today** | **54 F** | 🌤️ Partly cloudy | `7:13a` / `4:33p` |
 | 🔔 **Sunday** | `52/42 F` | 🌧️ Rain | `7:14a` / `4:32p` |
 | 🔴 **Monday** | `52/41 F` | 🌦️ Drizzle | `7:16a` / `4:31p` |
 | 🟢 **Tuesday** | `52/41 F` | 🌦️ Drizzle | `7:17a` / `4:30p` |
