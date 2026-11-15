@@ -398,9 +398,9 @@ jobs:
           lines = [
               "## 🎄✨ Seattle Weather & Sky · `47.6062 N, 122.3321 W` ✨🎄",
               "",
-              "| 🎁 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Sun / Timing |",
+              "| 🌌 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Sun / Timing |",
               "| :--- | :---: | :--- | :---: |",
-              f"| 🌟 **Now** | **{temp} F** | {icon} {condition} | `{sr0_s}` / `{ss0_s}` |",
+              f"| 🌟 **Today** | **{temp} F** | {icon} {condition} | `{sr0_s}` / `{ss0_s}` |",
           ]
           for idx, entry in enumerate(forecast_lines):
               safe = entry.replace('"', "").replace("|", "")
