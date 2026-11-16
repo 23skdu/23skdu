@@ -400,7 +400,8 @@ jobs:
               "",
               "| 🌌 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Night/Day Illumination |",
               "| :--- | :---: | :--- | :---: |",
-              f"| 🌟 **Today** | **{temp} F** | {icon} {condition} | `{sr0_s}` / `{ss0_s}` |",
+              f"| 🌟 **Today** · {today_d.strftime('%b %-d')} | **{temp} F** | "
+              f"{icon} {condition} | `{sr0_s}` / `{ss0_s}` |",
           ]
           for idx, entry in enumerate(forecast_lines):
               safe = entry.replace('"', "").replace("|", "")
@@ -417,12 +418,14 @@ jobs:
                   temps = temps.replace(" ", "")
                   if temps.endswith("F"):
                       temps = temps[:-1] + " F"
+                  forecast_date = (today_d + datetime.timedelta(days=idx + 1)).strftime("%b %-d")
                   lines.append(
-                      f"| {badge} **{day}** | `{temps}` | {cond} | `{sr_s}` / `{ss_s}` |"
+                      f"| {badge} **{day}** · {forecast_date} | `{temps}` | {cond} | `{sr_s}` / `{ss_s}` |"
                   )
               else:
+                  forecast_date = (today_d + datetime.timedelta(days=idx + 1)).strftime("%b %-d")
                   lines.append(
-                      f"| {badge} **Forecast** | — | {safe} | `{fmt_short_time(sr_f)}` / "
+                      f"| {badge} **Forecast** · {forecast_date} | — | {safe} | `{fmt_short_time(sr_f)}` / "
                       f"`{fmt_short_time(ss_f)}` |"
                   )
 
