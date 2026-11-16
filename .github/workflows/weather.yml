@@ -409,7 +409,9 @@ jobs:
               badge = badges[idx % len(badges)]
               sr_f, ss_f = sun_times_noaa(today_d + datetime.timedelta(days=idx + 1))
               if len(parts) >= 3:
-                  day, temps, cond = parts[0], parts[1], parts[2]
+                  _, temps, cond = parts[0], parts[1], parts[2]
+                  forecast_day = today_d + datetime.timedelta(days=idx + 1)
+                  day = forecast_day.strftime("%A")
                   badge = day_badges.get(day, badge)
                   sr_raw = parts[3] if len(parts) > 3 else ""
                   ss_raw = parts[4] if len(parts) > 4 else ""
@@ -418,7 +420,7 @@ jobs:
                   temps = temps.replace(" ", "")
                   if temps.endswith("F"):
                       temps = temps[:-1] + " F"
-                  forecast_date = (today_d + datetime.timedelta(days=idx + 1)).strftime("%b %-d")
+                  forecast_date = forecast_day.strftime("%b %-d")
                   lines.append(
                       f"| {badge} **{day}** · {forecast_date} | `{temps}` | {cond} | `{sr_s}` / `{ss_s}` |"
                   )
