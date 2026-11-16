@@ -1,7 +1,7 @@
 ## About
 
 I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and developer tooling, with a focus on observability
-
+[About Me](https://23skdu.github.io/)
 <!-- weather:start -->
 ## 🎄✨ Seattle Weather & Sky · `47.6062 N, 122.3321 W` ✨🎄
 
