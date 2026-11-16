@@ -7,11 +7,11 @@ I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and d
 
 | 🌌 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Night/Day Illumination |
 | :--- | :---: | :--- | :---: |
-| 🌟 **Today** · Nov 15 | **50 F** | 🌧️ Patchy rain nearby | `7:15a` / `4:32p` |
-| 🔔 **Sunday** · Nov 16 | `53/44 F` | 🌧️ Light rain shower | `7:15a` / `4:32p` |
-| 🔴 **Monday** · Nov 17 | `51/41 F` | 🌧️ Patchy rain nearby | `7:17a` / `4:31p` |
-| 🟢 **Tuesday** · Nov 18 | `50/40 F` | 🌧️ Patchy rain nearby | `7:18a` / `4:30p` |
-| ☀️ **Sun** | ♏ Scorpio `23°` | **6th House** · Placidus | `Nov 15 · 5:56 PM PST` |
+| 🌟 **Today** · Nov 15 | **46 F** | 🌤️ Partly cloudy | `7:14a` / `4:32p` |
+| 🔴 **Monday** · Nov 16 | `50/41 F` | 🌦️ Drizzle | `7:16a` / `4:31p` |
+| 🟢 **Tuesday** · Nov 17 | `50/38 F` | ☀️ Clear sky | `7:17a` / `4:30p` |
+| ⛄ **Wednesday** · Nov 18 | `49/40 F` | 🌤️ Partly cloudy | `7:19a` / `4:29p` |
+| ☀️ **Sun** | ♏ Scorpio `23°` | **6th House** · Placidus | `Nov 15 · 6:00 PM PST` |
 | 🌙 **Moon** | ♒ Aquarius `8°` | **9th House** · 🌓 37% | First Quarter |
 | 🌑 **New Moon** | `Nov 8` | **4th House** ♏ · New cycle, 0% | `11:02p` PST |
 | 🌓 **First Qtr** | `Nov 17` | **5th House** ♒ · Waxing, 50% | `3:48a` PST |
