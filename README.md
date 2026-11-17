@@ -7,12 +7,12 @@ I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and d
 
 | 🌌 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Night/Day Illumination |
 | :--- | :---: | :--- | :---: |
-| 🌟 **Today** · Nov 17 | **40 F** | ☀️ Clear sky | `7:17a` / `4:30p` |
+| 🌟 **Today** · Nov 17 | **50 F** | ☀️ Clear sky | `7:17a` / `4:30p` |
 | ⛄ **Wednesday** · Nov 18 | `51/39 F` | 🌦️ Drizzle | `7:19a` / `4:29p` |
-| 🕯️ **Thursday** · Nov 19 | `49/39 F` | 🌤️ Partly cloudy | `7:20a` / `4:28p` |
-| 🦌 **Friday** · Nov 20 | `46/37 F` | 🌤️ Partly cloudy | `7:21a` / `4:27p` |
-| ☀️ **Sun** | ♏ Scorpio `25°` | **3rd House** · Placidus | `Nov 17 · 12:46 AM PST` |
-| 🌙 **Moon** | ♒ Aquarius `23°` | **6th House** · 🌓 49% | First Quarter |
+| 🕯️ **Thursday** · Nov 19 | `49/39 F` | 🌦️ Drizzle | `7:20a` / `4:28p` |
+| 🦌 **Friday** · Nov 20 | `45/37 F` | 🌤️ Partly cloudy | `7:21a` / `4:27p` |
+| ☀️ **Sun** | ♏ Scorpio `25°` | **8th House** · Placidus | `Nov 17 · 1:27 PM PST` |
+| 🌙 **Moon** | ♓ Pisces `0°` | **12th House** · 🌓 54% | First Quarter |
 | 🌑 **New Moon** | `Nov 8` | **4th House** ♏ · New cycle, 0% | `11:02p` PST |
 | 🌓 **First Qtr** | `Nov 17` | **5th House** ♒ · Waxing, 50% | `3:48a` PST |
 | 🌕 **Full Moon** | `Nov 24` | **7th House** ♊ · Peak light, 100% | `6:53a` PST |
