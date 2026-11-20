@@ -123,25 +123,46 @@ jobs:
               return n
 
 
-          def color_for(count):
-              if count <= 0:
+          def color_for_n(n):
+              if n < 1:
                   return None
-              if count <= 3:
-                  return "#9be9a8"
-              if count <= 10:
-                  return "#40c463"
-              if count <= 25:
-                  return "#30a14e"
-              return "#216e39"
+              palette = [
+                  "#0b3d1f", "#115c2f", "#1a7f37",
+                  "#238636", "#2ea043", "#56d364",
+              ]
+              idx = n - 1
+              if idx >= len(palette):
+                  idx = len(palette) - 1
+              return palette[idx]
 
+
+          # Month boundaries for red side markers
+          from collections import defaultdict
+
+          week_day_dates = defaultdict(dict)
+          for wi, di, date_str, count in grid:
+              week_day_dates[wi][di] = date_str
+
+          month_boundaries = []
+          prev_month = None
+          for wi in sorted(week_day_dates):
+              if 0 in week_day_dates[wi]:
+                  dstr = week_day_dates[wi][0]
+              else:
+                  dstr = next(iter(week_day_dates[wi].values()))
+              dt = datetime.date.fromisoformat(dstr)
+              mabbr = dt.strftime("%b")
+              if mabbr != prev_month:
+                  month_boundaries.append((wi, mabbr))
+                  prev_month = mabbr
 
           polys = []  # (sortkey_tuple, svg_line)
           for wi, di, date_str, count in grid:
-              c = color_for(count)
-              if c is None:
-                  continue
               n = stack_count(count)
               if n == 0:
+                  continue
+              c = color_for_n(n)
+              if c is None:
                   continue
               bx = ox + (wi - di) * cube_w
               by = oy + (wi + di) * cube_h
@@ -190,6 +211,34 @@ jobs:
           )
           for _, line in polys:
               svg_lines.append(line)
+
+          # Red month divider lines on the side
+          month_lines = []
+          for wi, mabbr in month_boundaries:
+              pts = []
+              for di in range(7):
+                  if di not in week_day_dates.get(wi, {}):
+                      continue
+                  bx = ox + (wi - di) * cube_w
+                  by = oy + (wi + di) * cube_h
+                  pts.append((bx + cube_w, by))
+              if len(pts) >= 2:
+                  pts_str = " ".join(f"{x},{y}" for x, y in pts)
+                  month_lines.append(
+                      f'<polyline points="{pts_str}" fill="none" '
+                      f'stroke="#f85149" stroke-width="1.2"/>'
+                  )
+              if pts:
+                  lx, ly = pts[-1]
+                  month_lines.append(
+                      f'<text x="{lx + 3}" y="{ly + 12}" '
+                      f'fill="#f85149" font-size="8" '
+                      f'font-family="sans-serif">{mabbr}</text>'
+                  )
+
+          for line in month_lines:
+              svg_lines.append(line)
+
           svg_lines.append("</svg>")
 
           svg_text = "\n".join(svg_lines)
