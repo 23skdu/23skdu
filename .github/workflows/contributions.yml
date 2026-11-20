@@ -105,8 +105,8 @@ jobs:
                   total = 0
 
           # Rendering parameters (compact)
-          cube_w = 8
-          cube_h = 2
+          cube_w = 12
+          cube_h = 3
           cube_z = 3
           max_stack = 6
           ox = 60
@@ -215,7 +215,7 @@ jobs:
 
           svg_lines = []
           svg_lines.append('<svg xmlns="http://www.w3.org/2000/svg"')
-          svg_lines.append('  viewBox="0 0 520 200"')
+          svg_lines.append('  viewBox="0 0 740 260"')
           svg_lines.append('  width="100%" height="auto"')
           svg_lines.append('  preserveAspectRatio="xMidYMid meet"')
           svg_lines.append('  role="img" aria-label="GitHub contributions heatmap">')
