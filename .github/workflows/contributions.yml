@@ -245,11 +245,11 @@ jobs:
                       f'stroke="#f85149" stroke-width="1.2"/>'
                   )
               if pts:
-                  lx, ly = pts[-1]
+                  lx, ly = pts[0]
                   month_lines.append(
-                      f'<text x="{lx + 3}" y="{ly + 12}" '
-                      f'fill="#f85149" font-size="8" '
-                      f'font-family="sans-serif">{mabbr}</text>'
+                      f'<text x="{lx - 3}" y="{ly - 2}" '
+                      f'fill="#f85149" font-size="9" '
+                      f'text-anchor="end" font-family="sans-serif">{mabbr}</text>'
                   )
 
           for line in month_lines:
