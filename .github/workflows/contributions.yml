@@ -209,8 +209,8 @@ jobs:
               "<!-- contributions:start -->\n"
               "<!-- heatmap:start -->\n"
               "<!-- github-contributions:start -->\n"
-              + svg_text
-              + "\n<!-- github-contributions:end -->\n"
+              "![GitHub Contributions Heatmap](contributions.svg)\n"
+              "<!-- github-contributions:end -->\n"
               "<!-- heatmap:end -->\n"
               "<!-- contributions:end -->"
           )
