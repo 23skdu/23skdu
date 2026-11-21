@@ -22,7 +22,6 @@ jobs:
           import os
           import re
           import json
-          import math
           import datetime
           import urllib.request
 
@@ -128,8 +127,8 @@ jobs:
               if n < 1:
                   return None
               palette = [
-                  "#0b3d1f", "#115c2f", "#1a7f37",
-                  "#238636", "#2ea043", "#56d364",
+                  "#fff176", "#ffd54f", "#ffca28",
+                  "#ff9800", "#f4511e", "#d32f2f",
               ]
               idx = n - 1
               if idx >= len(palette):
@@ -158,7 +157,7 @@ jobs:
                   prev_month = mabbr
 
           polys = []  # (sortkey_tuple, svg_line)
-          star_lines = []
+          flame_lines = []
           for wi, di, date_str, count in grid:
               n = stack_count(count)
               if n == 0:
@@ -200,15 +199,23 @@ jobs:
               if n >= 5:
                   cx = bx + cube_w
                   cy = by - (n - 1) * cube_z - cube_h - 3
-                  star_pts = []
-                  for i in range(10):
-                      ang = math.radians(i * 36 - 90)
-                      r = 4 if i % 2 == 0 else 1.6
-                      star_pts.append((cx + r * math.cos(ang), cy + r * math.sin(ang)))
-                  star_str = " ".join(f"{x:.1f},{y:.1f}" for x, y in star_pts)
-                  star_lines.append(
-                      f'<polygon points="{star_str}" fill="#f0e130" '
-                      f'stroke="#b8860b" stroke-width="0.3"/>'
+                  outer_pts = [
+                      (cx, cy - 7), (cx - 4, cy - 1), (cx - 2, cy + 3),
+                      (cx, cy + 4), (cx + 2, cy + 3), (cx + 4, cy - 1),
+                  ]
+                  outer_str = " ".join(f"{x:.1f},{y:.1f}" for x, y in outer_pts)
+                  flame_lines.append(
+                      f'<polygon points="{outer_str}" fill="#ff4500" '
+                      f'stroke="#b71c1c" stroke-width="0.3"/>'
+                  )
+                  inner_pts = [
+                      (cx, cy - 4), (cx - 2, cy), (cx - 1, cy + 2),
+                      (cx, cy + 2.5), (cx + 1, cy + 2), (cx + 2, cy),
+                  ]
+                  inner_str = " ".join(f"{x:.1f},{y:.1f}" for x, y in inner_pts)
+                  flame_lines.append(
+                      f'<polygon points="{inner_str}" fill="#ffcc00" '
+                      f'stroke="#ff8f00" stroke-width="0.3"/>'
                   )
 
           polys.sort(key=lambda p: (p[0][0], p[0][1], p[0][2], p[0][3]))
@@ -220,13 +227,24 @@ jobs:
           svg_lines.append('  preserveAspectRatio="xMidYMid meet"')
           svg_lines.append('  role="img" aria-label="GitHub contributions heatmap">')
           svg_lines.append('<rect width="100%" height="100%" fill="#0d1117"/>')
+          svg_lines.append('<defs>')
+          svg_lines.append('  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">')
+          svg_lines.append('    <feGaussianBlur stdDeviation="2.5" result="blur"/>')
+          svg_lines.append('    <feMerge>')
+          svg_lines.append('      <feMergeNode in="blur"/>')
+          svg_lines.append('      <feMergeNode in="SourceGraphic"/>')
+          svg_lines.append('    </feMerge>')
+          svg_lines.append('  </filter>')
+          svg_lines.append('</defs>')
           label = "GitHub Contributions · past year · " + str(total) + " total"
           svg_lines.append(
               f'<text x="8" y="14" fill="#c9d1d9" font-size="10" '
               f'font-family="sans-serif">{label}</text>'
           )
+          svg_lines.append('<g filter="url(#glow)">')
           for _, line in polys:
               svg_lines.append(line)
+          svg_lines.append('</g>')
 
           # Red month divider lines on the side
           month_lines = []
@@ -255,9 +273,11 @@ jobs:
           for line in month_lines:
               svg_lines.append(line)
 
-          for line in star_lines:
+          svg_lines.append('<g filter="url(#glow)">')
+          for line in flame_lines:
               svg_lines.append(line)
 
+          svg_lines.append('</g>')
           svg_lines.append("</svg>")
 
           svg_text = "\n".join(svg_lines)
