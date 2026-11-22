@@ -13,7 +13,7 @@
     </feMerge>
   </filter>
 </defs>
-<text x="8" y="14" fill="#c9d1d9" font-size="10" font-family="sans-serif">GitHub Contributions · past year · 9266 total</text>
+<text x="8" y="14" fill="#c9d1d9" font-size="10" font-family="sans-serif">GitHub Contributions · past year · 9270 total</text>
 <g filter="url(#glow)">
 <polygon points="96,99 108,102 108,105 96,102" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 <polygon points="120,99 108,102 108,105 120,102" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
@@ -3473,10 +3473,19 @@
 <line x1="620.0" y1="167.1" x2="625.0" y2="158.5" stroke="#ffdd00" stroke-width="2"/>
 <line x1="625.9" y1="173.0" x2="634.5" y2="168.0" stroke="#ffdd00" stroke-width="2"/>
 </g>
-<rect x="4" y="184" width="320" height="72" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
-<text x="10" y="198" fill="#c9d1d9" font-size="9" font-weight="bold" font-family="sans-serif">Legend</text>
-<text x="10" y="212" fill="#c9d1d9" font-size="9" font-family="sans-serif">Each level = 10 commits</text>
-<text x="10" y="226" fill="#ff8c00" font-size="9" font-family="sans-serif">&gt; 100 commits: fireball</text>
-<text x="10" y="240" fill="#ff8c00" font-size="9" font-family="sans-serif">&gt; 150 commits: larger fireball</text>
-<text x="10" y="254" fill="#ffdd00" font-size="9" font-family="sans-serif">Blaze  2026-04-30 (211 commits) - most commits single day</text>
+<rect x="4" y="176" width="340" height="96" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
+<text x="10" y="190" fill="#c9d1d9" font-size="9" font-weight="bold" font-family="sans-serif">Legend</text>
+<rect x="10" y="196" width="12" height="12" fill="#ffca28" stroke="#164020" stroke-width="0.5"/>
+<text x="30" y="206" fill="#c9d1d9" font-size="9" font-family="sans-serif">10 commits</text>
+<circle cx="16" cy="222" r="8" fill="#ff8c00" opacity="0.35"/>
+<circle cx="16" cy="222" r="5" fill="#ffcc00" opacity="0.6"/>
+<circle cx="16" cy="222" r="3" fill="#fff176"/>
+<text x="30" y="226" fill="#ff8c00" font-size="9" font-family="sans-serif">100 commits</text>
+<circle cx="16" cy="244" r="10" fill="#d32f2f" opacity="0.4"/>
+<circle cx="16" cy="244" r="7" fill="#f4511e" opacity="0.6"/>
+<circle cx="16" cy="244" r="4" fill="#ff9800"/>
+<text x="30" y="248" fill="#ff8c00" font-size="9" font-family="sans-serif">150 commits</text>
+<circle cx="16" cy="266" r="12" fill="#b71c1c" stroke="#ffdd00" stroke-width="2"/>
+<circle cx="16" cy="266" r="6" fill="#ffcc00"/>
+<text x="30" y="270" fill="#ffdd00" font-size="9" font-family="sans-serif">Blaze  2026-04-30 (211 commits) - most commits single day</text>
 </svg>
