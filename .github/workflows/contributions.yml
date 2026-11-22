@@ -214,20 +214,26 @@ jobs:
                       ray_inner, ray_outer = 18, 32
                       step = 20
                       offset = 18
+                      col_outer, col_mid, col_inner = "#b71c1c", "#d32f2f", "#ffcc00"
+                      stroke_attr = ' stroke="#ffdd00" stroke-width="2"'
                   elif count > 150:
                       rad_outer, rad_mid, rad_inner = 24, 18, 11
                       ray_inner, ray_outer = 16, 26
                       step = 30
                       offset = 14
+                      col_outer, col_mid, col_inner = "#d32f2f", "#f4511e", "#ff9800"
+                      stroke_attr = ""
                   else:
                       rad_outer, rad_mid, rad_inner = 18, 13, 8
                       ray_inner, ray_outer = 10, 18
                       step = 45
                       offset = 10
+                      col_outer, col_mid, col_inner = "#ff8c00", "#ffcc00", "#fff176"
+                      stroke_attr = ""
                   cy = by - n * cube_z - cube_h - offset
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_outer}" fill="#ff8c00" opacity="0.35"/>')
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_mid}" fill="#ffcc00" opacity="0.6"/>')
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_inner}" fill="#fff176"/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_outer}" fill="{col_outer}" opacity="0.35"{stroke_attr}/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_mid}" fill="{col_mid}" opacity="0.6"/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_inner}" fill="{col_inner}"/>')
                   for _ang in range(0, 360, step):
                       _x1 = cx + ray_inner * math.cos(math.radians(_ang))
                       _y1 = cy + ray_inner * math.sin(math.radians(_ang))
