@@ -112,7 +112,7 @@ jobs:
           cube_z = 3
           max_stack = 30
           ox = 60
-          oy = 90
+          oy = 115
 
 
           def stack_count(count):
@@ -249,7 +249,7 @@ jobs:
 
           svg_lines = []
           svg_lines.append('<svg xmlns="http://www.w3.org/2000/svg"')
-          svg_lines.append('  viewBox="0 0 740 380"')
+          svg_lines.append('  viewBox="0 0 740 405"')
           svg_lines.append('  width="100%" height="auto"')
           svg_lines.append('  preserveAspectRatio="xMidYMid meet"')
           svg_lines.append('  role="img" aria-label="GitHub contributions heatmap">')
@@ -309,46 +309,46 @@ jobs:
           svg_lines.append('</g>')
           # Legend box at bottom left (below heatmap)
           svg_lines.append(
-              '<rect x="4" y="278" width="340" height="96" '
+              '<rect x="4" y="303" width="340" height="96" '
               'fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>'
           )
           svg_lines.append(
-              '<text x="10" y="292" fill="#c9d1d9" font-size="9" '
+              '<text x="10" y="317" fill="#c9d1d9" font-size="9" '
               'font-weight="bold" font-family="sans-serif">Legend</text>'
           )
           # 10 commits = yellow box
           svg_lines.append(
-              '<rect x="10" y="298" width="12" height="12" '
+              '<rect x="10" y="323" width="12" height="12" '
               'fill="#ffca28" stroke="#164020" stroke-width="0.5"/>'
           )
           svg_lines.append(
-              '<text x="30" y="308" fill="#c9d1d9" font-size="9" '
+              '<text x="30" y="333" fill="#c9d1d9" font-size="9" '
               'font-family="sans-serif">10 commits</text>'
           )
           # 100 commits = fireball emoji-like icon
-          svg_lines.append('<circle cx="16" cy="324" r="8" fill="#ff8c00" opacity="0.35"/>')
-          svg_lines.append('<circle cx="16" cy="324" r="5" fill="#ffcc00" opacity="0.6"/>')
-          svg_lines.append('<circle cx="16" cy="324" r="3" fill="#fff176"/>')
+          svg_lines.append('<circle cx="16" cy="349" r="8" fill="#ff8c00" opacity="0.35"/>')
+          svg_lines.append('<circle cx="16" cy="349" r="5" fill="#ffcc00" opacity="0.6"/>')
+          svg_lines.append('<circle cx="16" cy="349" r="3" fill="#fff176"/>')
           svg_lines.append(
-              '<text x="30" y="328" fill="#ff8c00" font-size="9" '
+              '<text x="30" y="353" fill="#ff8c00" font-size="9" '
               'font-family="sans-serif">100 commits</text>'
           )
           # 150 commits = larger darker red fireball
-          svg_lines.append('<circle cx="16" cy="346" r="10" fill="#d32f2f" opacity="0.4"/>')
-          svg_lines.append('<circle cx="16" cy="346" r="7" fill="#f4511e" opacity="0.6"/>')
-          svg_lines.append('<circle cx="16" cy="346" r="4" fill="#ff9800"/>')
+          svg_lines.append('<circle cx="16" cy="371" r="10" fill="#d32f2f" opacity="0.4"/>')
+          svg_lines.append('<circle cx="16" cy="371" r="7" fill="#f4511e" opacity="0.6"/>')
+          svg_lines.append('<circle cx="16" cy="371" r="4" fill="#ff9800"/>')
           svg_lines.append(
-              '<text x="30" y="350" fill="#ff8c00" font-size="9" '
+              '<text x="30" y="375" fill="#ff8c00" font-size="9" '
               'font-family="sans-serif">150 commits</text>'
           )
           # Blaze = darkest red with yellow outline
           svg_lines.append(
-              '<circle cx="16" cy="368" r="12" fill="#b71c1c" '
+              '<circle cx="16" cy="393" r="12" fill="#b71c1c" '
               'stroke="#ffdd00" stroke-width="2"/>'
           )
-          svg_lines.append('<circle cx="16" cy="368" r="6" fill="#ffcc00"/>')
+          svg_lines.append('<circle cx="16" cy="393" r="6" fill="#ffcc00"/>')
           svg_lines.append(
-              f'<text x="30" y="372" fill="#ffdd00" font-size="9" '
+              f'<text x="30" y="397" fill="#ffdd00" font-size="9" '
               f'font-family="sans-serif">Blaze  {max_date} ({max_count} commits) - most commits single day</text>'
           )
           svg_lines.append("</svg>")
