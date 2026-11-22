@@ -110,7 +110,7 @@ jobs:
           cube_w = 12
           cube_h = 3
           cube_z = 3
-          max_stack = 6
+          max_stack = 30
           ox = 60
           oy = 70
 
@@ -118,7 +118,7 @@ jobs:
           def stack_count(count):
               if count <= 0:
                   return 0
-              n = (count + 19) // 20
+              n = (count + 9) // 10
               if n < 1:
                   n = 1
               if n > max_stack:
@@ -168,13 +168,9 @@ jobs:
               if _count > max_count:
                   max_count = _count
                   max_date = _date_str
-          FLAME_MIN_COMMITS = 81
           for wi, di, date_str, count in grid:
               n = stack_count(count)
               is_max_day = (date_str == max_date and count == max_count and max_count > 0)
-              if is_max_day:
-                  # larger tower for the top-contributions day
-                  n = min(max(n, max_stack + 1), max_stack + 2)
               if n == 0:
                   continue
               c = color_for_n(n)
@@ -211,43 +207,37 @@ jobs:
                   polys.append(((wi + di, wi, k, 1), poly(right, c)))
                   polys.append(((wi + di, wi, k, 2), poly(top, c)))
 
-              if is_max_day:
+              if count > 100:
                   cx = bx + cube_w
-                  cy = by - n * cube_z - cube_h - 14
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="24" fill="#ff8c00" opacity="0.35"/>')
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="18" fill="#ffcc00" opacity="0.6"/>')
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="11" fill="#fff176"/>')
-                  for _ang in range(0, 360, 30):
-                      _x1 = cx + 16 * math.cos(math.radians(_ang))
-                      _y1 = cy + 16 * math.sin(math.radians(_ang))
-                      _x2 = cx + 26 * math.cos(math.radians(_ang))
-                      _y2 = cy + 26 * math.sin(math.radians(_ang))
+                  if is_max_day:
+                      rad_outer, rad_mid, rad_inner = 30, 22, 14
+                      ray_inner, ray_outer = 18, 32
+                      step = 20
+                      offset = 18
+                  elif count > 150:
+                      rad_outer, rad_mid, rad_inner = 24, 18, 11
+                      ray_inner, ray_outer = 16, 26
+                      step = 30
+                      offset = 14
+                  else:
+                      rad_outer, rad_mid, rad_inner = 18, 13, 8
+                      ray_inner, ray_outer = 10, 18
+                      step = 45
+                      offset = 10
+                  cy = by - n * cube_z - cube_h - offset
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_outer}" fill="#ff8c00" opacity="0.35"/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_mid}" fill="#ffcc00" opacity="0.6"/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_inner}" fill="#fff176"/>')
+                  for _ang in range(0, 360, step):
+                      _x1 = cx + ray_inner * math.cos(math.radians(_ang))
+                      _y1 = cy + ray_inner * math.sin(math.radians(_ang))
+                      _x2 = cx + ray_outer * math.cos(math.radians(_ang))
+                      _y2 = cy + ray_outer * math.sin(math.radians(_ang))
                       fireball_lines.append(
                           f'<line x1="{_x1:.1f}" y1="{_y1:.1f}" '
                           f'x2="{_x2:.1f}" y2="{_y2:.1f}" '
                           f'stroke="#ffdd00" stroke-width="2"/>'
                       )
-              elif n >= 5:
-                  cx = bx + cube_w
-                  cy = by - (n - 1) * cube_z - cube_h - 3
-                  outer_pts = [
-                      (cx, cy - 7), (cx - 4, cy - 1), (cx - 2, cy + 3),
-                      (cx, cy + 4), (cx + 2, cy + 3), (cx + 4, cy - 1),
-                  ]
-                  outer_str = " ".join(f"{x:.1f},{y:.1f}" for x, y in outer_pts)
-                  flame_lines.append(
-                      f'<polygon points="{outer_str}" fill="#ff4500" '
-                      f'stroke="#b71c1c" stroke-width="0.3"/>'
-                  )
-                  inner_pts = [
-                      (cx, cy - 4), (cx - 2, cy), (cx - 1, cy + 2),
-                      (cx, cy + 2.5), (cx + 1, cy + 2), (cx + 2, cy),
-                  ]
-                  inner_str = " ".join(f"{x:.1f},{y:.1f}" for x, y in inner_pts)
-                  flame_lines.append(
-                      f'<polygon points="{inner_str}" fill="#ffcc00" '
-                      f'stroke="#ff8f00" stroke-width="0.3"/>'
-                  )
 
           polys.sort(key=lambda p: (p[0][0], p[0][1], p[0][2], p[0][3]))
 
@@ -313,19 +303,27 @@ jobs:
           svg_lines.append('</g>')
           # Legend box at bottom left
           svg_lines.append(
-              '<rect x="4" y="210" width="300" height="46" '
+              '<rect x="4" y="184" width="320" height="72" '
               'fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>'
           )
           svg_lines.append(
-              '<text x="10" y="224" fill="#c9d1d9" font-size="9" '
+              '<text x="10" y="198" fill="#c9d1d9" font-size="9" '
               'font-weight="bold" font-family="sans-serif">Legend</text>'
           )
           svg_lines.append(
-              f'<text x="10" y="238" fill="#f85149" font-size="9" '
-              f'font-family="sans-serif">Flames  &gt; {FLAME_MIN_COMMITS} commits</text>'
+              '<text x="10" y="212" fill="#c9d1d9" font-size="9" '
+              'font-family="sans-serif">Each level = 10 commits</text>'
           )
           svg_lines.append(
-              f'<text x="10" y="252" fill="#ffdd00" font-size="9" '
+              '<text x="10" y="226" fill="#ff8c00" font-size="9" '
+              'font-family="sans-serif">&gt; 100 commits: fireball</text>'
+          )
+          svg_lines.append(
+              '<text x="10" y="240" fill="#ff8c00" font-size="9" '
+              'font-family="sans-serif">&gt; 150 commits: larger fireball</text>'
+          )
+          svg_lines.append(
+              f'<text x="10" y="254" fill="#ffdd00" font-size="9" '
               f'font-family="sans-serif">Blaze  {max_date} ({max_count} commits) - most commits single day</text>'
           )
           svg_lines.append("</svg>")
