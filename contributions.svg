@@ -13,7 +13,7 @@
     </feMerge>
   </filter>
 </defs>
-<text x="8" y="14" fill="#c9d1d9" font-size="10" font-family="sans-serif">GitHub Contributions · past year · 9072 total</text>
+<text x="8" y="14" fill="#c9d1d9" font-size="10" font-family="sans-serif">GitHub Contributions · past year · 9085 total</text>
 <g filter="url(#glow)">
 <polygon points="108,82 120,85 120,88 108,85" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
 <polygon points="132,82 120,85 120,88 132,85" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
@@ -1728,12 +1728,15 @@
 <polygon points="624,235 636,238 636,241 624,238" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
 <polygon points="648,235 636,238 636,241 648,238" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
 <polygon points="624,235 636,232 648,235 636,238" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="612,244 624,247 624,250 612,247" fill="#ffd54f" stroke="#164020" stroke-width="0.2"/>
-<polygon points="636,244 624,247 624,250 636,247" fill="#ffd54f" stroke="#164020" stroke-width="0.2"/>
-<polygon points="612,244 624,241 636,244 624,247" fill="#ffd54f" stroke="#164020" stroke-width="0.2"/>
-<polygon points="612,241 624,244 624,247 612,244" fill="#ffd54f" stroke="#164020" stroke-width="0.2"/>
-<polygon points="636,241 624,244 624,247 636,244" fill="#ffd54f" stroke="#164020" stroke-width="0.2"/>
-<polygon points="612,241 624,238 636,241 624,244" fill="#ffd54f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="612,244 624,247 624,250 612,247" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,244 624,247 624,250 636,247" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="612,244 624,241 636,244 624,247" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="612,241 624,244 624,247 612,244" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,241 624,244 624,247 636,244" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="612,241 624,238 636,241 624,244" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="612,238 624,241 624,244 612,241" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,238 624,241 624,244 636,241" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="612,238 624,235 636,238 624,241" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
 </g>
 <text x="69" y="68" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Nov</text>
 <polyline points="108,79 96,82 84,85 72,88 60,91 48,94 36,97" fill="none" stroke="#f85149" stroke-width="1.2"/>
@@ -1811,8 +1814,6 @@
 <polygon points="324.0,120.0 322.0,124.0 323.0,126.0 324.0,126.5 325.0,126.0 326.0,124.0" fill="#ffcc00" stroke="#ff8f00" stroke-width="0.3"/>
 <polygon points="312.0,120.0 308.0,126.0 310.0,130.0 312.0,131.0 314.0,130.0 316.0,126.0" fill="#ff4500" stroke="#b71c1c" stroke-width="0.3"/>
 <polygon points="312.0,123.0 310.0,127.0 311.0,129.0 312.0,129.5 313.0,129.0 314.0,127.0" fill="#ffcc00" stroke="#ff8f00" stroke-width="0.3"/>
-<polygon points="300.0,123.0 296.0,129.0 298.0,133.0 300.0,134.0 302.0,133.0 304.0,129.0" fill="#ff4500" stroke="#b71c1c" stroke-width="0.3"/>
-<polygon points="300.0,126.0 298.0,130.0 299.0,132.0 300.0,132.5 301.0,132.0 302.0,130.0" fill="#ffcc00" stroke="#ff8f00" stroke-width="0.3"/>
 <polygon points="276.0,129.0 272.0,135.0 274.0,139.0 276.0,140.0 278.0,139.0 280.0,135.0" fill="#ff4500" stroke="#b71c1c" stroke-width="0.3"/>
 <polygon points="276.0,132.0 274.0,136.0 275.0,138.0 276.0,138.5 277.0,138.0 278.0,136.0" fill="#ffcc00" stroke="#ff8f00" stroke-width="0.3"/>
 <polygon points="372.0,123.0 368.0,129.0 370.0,133.0 372.0,134.0 374.0,133.0 376.0,129.0" fill="#ff4500" stroke="#b71c1c" stroke-width="0.3"/>
@@ -1825,5 +1826,18 @@
 <polygon points="696.0,201.0 694.0,205.0 695.0,207.0 696.0,207.5 697.0,207.0 698.0,205.0" fill="#ffcc00" stroke="#ff8f00" stroke-width="0.3"/>
 <polygon points="648.0,210.0 644.0,216.0 646.0,220.0 648.0,221.0 650.0,220.0 652.0,216.0" fill="#ff4500" stroke="#b71c1c" stroke-width="0.3"/>
 <polygon points="648.0,213.0 646.0,217.0 647.0,219.0 648.0,219.5 649.0,219.0 650.0,217.0" fill="#ffcc00" stroke="#ff8f00" stroke-width="0.3"/>
+<circle cx="300" cy="122" r="18" fill="#ff8c00" opacity="0.35"/>
+<circle cx="300" cy="122" r="13" fill="#ffcc00" opacity="0.6"/>
+<circle cx="300" cy="122" r="8" fill="#fff176"/>
+<line x1="310.0" y1="122.0" x2="318.0" y2="122.0" stroke="#ffdd00" stroke-width="2"/>
+<line x1="307.1" y1="129.1" x2="312.7" y2="134.7" stroke="#ffdd00" stroke-width="2"/>
+<line x1="300.0" y1="132.0" x2="300.0" y2="140.0" stroke="#ffdd00" stroke-width="2"/>
+<line x1="292.9" y1="129.1" x2="287.3" y2="134.7" stroke="#ffdd00" stroke-width="2"/>
+<line x1="290.0" y1="122.0" x2="282.0" y2="122.0" stroke="#ffdd00" stroke-width="2"/>
+<line x1="292.9" y1="114.9" x2="287.3" y2="109.3" stroke="#ffdd00" stroke-width="2"/>
+<line x1="300.0" y1="112.0" x2="300.0" y2="104.0" stroke="#ffdd00" stroke-width="2"/>
+<line x1="307.1" y1="114.9" x2="312.7" y2="109.3" stroke="#ffdd00" stroke-width="2"/>
 </g>
+<text x="8" y="232" fill="#f85149" font-size="9" font-family="sans-serif">Legend: flames = at least 81 commits</text>
+<text x="8" y="246" fill="#ffdd00" font-size="9" font-family="sans-serif">Sunny fireball: 2026-04-30 (210 commits) - most commits in the last year</text>
 </svg>

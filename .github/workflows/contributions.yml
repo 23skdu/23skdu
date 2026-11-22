@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - name: Pull latest changes
+        run: git pull --rebase origin main
       - name: Update contributions heatmap
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -23,6 +25,7 @@ jobs:
           import re
           import json
           import datetime
+          import math
           import urllib.request
 
           owner = os.environ.get("GITHUB_REPOSITORY_OWNER")
@@ -158,6 +161,14 @@ jobs:
 
           polys = []  # (sortkey_tuple, svg_line)
           flame_lines = []
+          fireball_lines = []
+          max_count = 0
+          max_date = None
+          for _wi, _di, _date_str, _count in grid:
+              if _count > max_count:
+                  max_count = _count
+                  max_date = _date_str
+          FLAME_MIN_COMMITS = 81
           for wi, di, date_str, count in grid:
               n = stack_count(count)
               if n == 0:
@@ -196,7 +207,24 @@ jobs:
                   polys.append(((wi + di, wi, k, 1), poly(right, c)))
                   polys.append(((wi + di, wi, k, 2), poly(top, c)))
 
-              if n >= 5:
+              is_max_day = (date_str == max_date and count == max_count and max_count > 0)
+              if is_max_day:
+                  cx = bx + cube_w
+                  cy = by - n * cube_z - cube_h - 8
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="18" fill="#ff8c00" opacity="0.35"/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="13" fill="#ffcc00" opacity="0.6"/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="8" fill="#fff176"/>')
+                  for _ang in range(0, 360, 45):
+                      _x1 = cx + 10 * math.cos(math.radians(_ang))
+                      _y1 = cy + 10 * math.sin(math.radians(_ang))
+                      _x2 = cx + 18 * math.cos(math.radians(_ang))
+                      _y2 = cy + 18 * math.sin(math.radians(_ang))
+                      fireball_lines.append(
+                          f'<line x1="{_x1:.1f}" y1="{_y1:.1f}" '
+                          f'x2="{_x2:.1f}" y2="{_y2:.1f}" '
+                          f'stroke="#ffdd00" stroke-width="2"/>'
+                      )
+              elif n >= 5:
                   cx = bx + cube_w
                   cy = by - (n - 1) * cube_z - cube_h - 3
                   outer_pts = [
@@ -276,8 +304,21 @@ jobs:
           svg_lines.append('<g filter="url(#glow)">')
           for line in flame_lines:
               svg_lines.append(line)
+          for line in fireball_lines:
+              svg_lines.append(line)
 
           svg_lines.append('</g>')
+          # Legend at bottom left
+          svg_lines.append(
+              f'<text x="8" y="232" fill="#f85149" font-size="9" '
+              f'font-family="sans-serif">Legend: flames = at least '
+              f'{FLAME_MIN_COMMITS} commits</text>'
+          )
+          svg_lines.append(
+              f'<text x="8" y="246" fill="#ffdd00" font-size="9" '
+              f'font-family="sans-serif">Sunny fireball: {max_date} '
+              f'({max_count} commits) - most commits in the last year</text>'
+          )
           svg_lines.append("</svg>")
 
           svg_text = "\n".join(svg_lines)
@@ -326,5 +367,6 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update GitHub contributions heatmap [skip ci]"
+            git pull --rebase origin main
             git push
           fi
