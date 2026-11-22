@@ -460,15 +460,20 @@ jobs:
                   unix, tz=datetime.timezone.utc
               )
               dt_loc = dt_utc.astimezone(TZ)
-              if dt_loc.year == now_loc.year and dt_loc.month == now_loc.month:
-                  frac = round((k - math.floor(k)) * 4) / 4.0
-                  p_cusps = placidus_houses(dt_utc)
-                  p_mlon = moon_lon(jde)
-                  p_sym, _ = SIGNS[int(p_mlon // 30) % 12]
-                  p_h = ordinal(which_house(p_mlon, p_cusps))
-                  phase_dates[frac].append(f"`{dt_loc.strftime('%b %-d')}`")
-                  phase_times[frac].append(f"`{fmt_short_time(dt_loc)}`")
-                  phase_houses[frac].append((p_h, p_sym))
+              # Only keep the next upcoming occurrence of each phase, even if
+              # it falls in a later month. Skip phases that have already passed.
+              if dt_loc <= now_loc:
+                  continue
+              frac = round((k - math.floor(k)) * 4) / 4.0
+              if phase_dates[frac]:
+                  continue
+              p_cusps = placidus_houses(dt_utc)
+              p_mlon = moon_lon(jde)
+              p_sym, _ = SIGNS[int(p_mlon // 30) % 12]
+              p_h = ordinal(which_house(p_mlon, p_cusps))
+              phase_dates[frac].append(f"`{dt_loc.strftime('%b %-d')}`")
+              phase_times[frac].append(f"`{fmt_short_time(dt_loc)}`")
+              phase_houses[frac].append((p_h, p_sym))
 
           phase_meta = [
               (0.0, "🌑", "New Moon", "New cycle, 0%"),
