@@ -1742,31 +1742,31 @@
 <polygon points="600,235 612,232 624,235 612,238" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
 </g>
 <polyline points="72,70 60,73 48,76 36,79 24,82 12,85 0,88" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="69" y="68" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Nov</text>
+<text x="69" y="68" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Nov</text>
 <polyline points="96,76 84,79 72,82 60,85 48,88 36,91 24,94" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="93" y="74" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Dec</text>
+<text x="93" y="74" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Dec</text>
 <polyline points="144,88 132,91 120,94 108,97 96,100 84,103 72,106" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="141" y="86" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Jan</text>
+<text x="141" y="86" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Jan</text>
 <polyline points="192,100 180,103 168,106 156,109 144,112 132,115 120,118" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="189" y="98" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Feb</text>
+<text x="189" y="98" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Feb</text>
 <polyline points="240,112 228,115 216,118 204,121 192,124 180,127 168,130" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="237" y="110" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Mar</text>
+<text x="237" y="110" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Mar</text>
 <polyline points="300,127 288,130 276,133 264,136 252,139 240,142 228,145" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="297" y="125" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Apr</text>
+<text x="297" y="125" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Apr</text>
 <polyline points="348,139 336,142 324,145 312,148 300,151 288,154 276,157" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="345" y="137" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">May</text>
+<text x="345" y="137" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">May</text>
 <polyline points="408,154 396,157 384,160 372,163 360,166 348,169 336,172" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="405" y="152" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Jun</text>
+<text x="405" y="152" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Jun</text>
 <polyline points="456,166 444,169 432,172 420,175 408,178 396,181 384,184" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="453" y="164" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Jul</text>
+<text x="453" y="164" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Jul</text>
 <polyline points="504,178 492,181 480,184 468,187 456,190 444,193 432,196" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="501" y="176" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Aug</text>
+<text x="501" y="176" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Aug</text>
 <polyline points="564,193 552,196 540,199 528,202 516,205 504,208 492,211" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="561" y="191" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Sep</text>
+<text x="561" y="191" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Sep</text>
 <polyline points="612,205 600,208 588,211 576,214 564,217 552,220 540,223" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="609" y="203" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Oct</text>
+<text x="609" y="203" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Oct</text>
 <polyline points="660,217 648,220 636,223 624,226 612,229 600,232 588,235" fill="none" stroke="#f85149" stroke-width="1.2"/>
-<text x="657" y="215" fill="#f85149" font-size="9" text-anchor="end" font-family="sans-serif">Nov</text>
+<text x="657" y="215" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Nov</text>
 <g filter="url(#glow)">
 <polygon points="84.0,57.0 80.0,63.0 82.0,67.0 84.0,68.0 86.0,67.0 88.0,63.0" fill="#ff4500" stroke="#b71c1c" stroke-width="0.3"/>
 <polygon points="84.0,60.0 82.0,64.0 83.0,66.0 84.0,66.5 85.0,66.0 86.0,64.0" fill="#ffcc00" stroke="#ff8f00" stroke-width="0.3"/>
