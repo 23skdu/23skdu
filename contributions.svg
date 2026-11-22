@@ -1843,6 +1843,8 @@
 <line x1="296.0" y1="96.1" x2="301.0" y2="87.5" stroke="#ffdd00" stroke-width="2"/>
 <line x1="301.9" y1="102.0" x2="310.5" y2="97.0" stroke="#ffdd00" stroke-width="2"/>
 </g>
-<text x="8" y="232" fill="#f85149" font-size="9" font-family="sans-serif">Legend: flames = at least 81 commits</text>
-<text x="8" y="246" fill="#ffdd00" font-size="9" font-family="sans-serif">Sunny fireball: 2026-04-30 (211 commits) - most commits in the last year</text>
+<rect x="4" y="210" width="300" height="46" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
+<text x="10" y="224" fill="#c9d1d9" font-size="9" font-weight="bold" font-family="sans-serif">Legend</text>
+<text x="10" y="238" fill="#f85149" font-size="9" font-family="sans-serif">Flames  &gt; 81 commits</text>
+<text x="10" y="252" fill="#ffdd00" font-size="9" font-family="sans-serif">Blaze  2026-04-30 (211 commits) - most commits single day</text>
 </svg>

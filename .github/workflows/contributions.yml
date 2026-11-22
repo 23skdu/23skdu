@@ -311,16 +311,22 @@ jobs:
               svg_lines.append(line)
 
           svg_lines.append('</g>')
-          # Legend at bottom left
+          # Legend box at bottom left
           svg_lines.append(
-              f'<text x="8" y="232" fill="#f85149" font-size="9" '
-              f'font-family="sans-serif">Legend: flames = at least '
-              f'{FLAME_MIN_COMMITS} commits</text>'
+              '<rect x="4" y="210" width="300" height="46" '
+              'fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>'
           )
           svg_lines.append(
-              f'<text x="8" y="246" fill="#ffdd00" font-size="9" '
-              f'font-family="sans-serif">Sunny fireball: {max_date} '
-              f'({max_count} commits) - most commits in the last year</text>'
+              '<text x="10" y="224" fill="#c9d1d9" font-size="9" '
+              'font-weight="bold" font-family="sans-serif">Legend</text>'
+          )
+          svg_lines.append(
+              f'<text x="10" y="238" fill="#f85149" font-size="9" '
+              f'font-family="sans-serif">Flames  &gt; {FLAME_MIN_COMMITS} commits</text>'
+          )
+          svg_lines.append(
+              f'<text x="10" y="252" fill="#ffdd00" font-size="9" '
+              f'font-family="sans-serif">Blaze  {max_date} ({max_count} commits) - most commits single day</text>'
           )
           svg_lines.append("</svg>")
 
