@@ -231,7 +231,10 @@ jobs:
                       col_outer, col_mid, col_inner = "#ff8c00", "#ffcc00", "#fff176"
                       stroke_attr = ""
                   cy = by - n * cube_z - cube_h - offset
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_outer}" fill="{col_outer}" opacity="0.35"{stroke_attr}/>')
+                  fireball_lines.append(
+                      f'<circle cx="{cx}" cy="{cy}" r="{rad_outer}" '
+                      f'fill="{col_outer}" opacity="0.35"{stroke_attr}/>'
+                  )
                   fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_mid}" fill="{col_mid}" opacity="0.6"/>')
                   fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="{rad_inner}" fill="{col_inner}"/>')
                   for _ang in range(0, 360, step):

@@ -1,4 +1,4 @@
-.PHONY: markdownlint actionlint yamllint lint clean hooks
+.PHONY: markdownlint actionlint yamllint lint clean hooks install
 
 markdownlint:
 	markdownlint '**/*.md' --dot
@@ -18,4 +18,7 @@ clean:
 
 hooks:
 	python3 -m pip install --quiet --break-system-packages pre-commit
+	npm install --global markdownlint-cli
 	python3 -m pre_commit install
+
+install: hooks
