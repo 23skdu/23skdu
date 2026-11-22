@@ -112,7 +112,7 @@ jobs:
           cube_z = 3
           max_stack = 30
           ox = 60
-          oy = 70
+          oy = 90
 
 
           def stack_count(count):
@@ -243,7 +243,7 @@ jobs:
 
           svg_lines = []
           svg_lines.append('<svg xmlns="http://www.w3.org/2000/svg"')
-          svg_lines.append('  viewBox="0 0 740 260"')
+          svg_lines.append('  viewBox="0 0 740 280"')
           svg_lines.append('  width="100%" height="auto"')
           svg_lines.append('  preserveAspectRatio="xMidYMid meet"')
           svg_lines.append('  role="img" aria-label="GitHub contributions heatmap">')
