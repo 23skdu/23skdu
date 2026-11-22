@@ -171,6 +171,10 @@ jobs:
           FLAME_MIN_COMMITS = 81
           for wi, di, date_str, count in grid:
               n = stack_count(count)
+              is_max_day = (date_str == max_date and count == max_count and max_count > 0)
+              if is_max_day:
+                  # larger tower for the top-contributions day
+                  n = min(max(n, max_stack + 1), max_stack + 2)
               if n == 0:
                   continue
               c = color_for_n(n)
@@ -207,18 +211,17 @@ jobs:
                   polys.append(((wi + di, wi, k, 1), poly(right, c)))
                   polys.append(((wi + di, wi, k, 2), poly(top, c)))
 
-              is_max_day = (date_str == max_date and count == max_count and max_count > 0)
               if is_max_day:
                   cx = bx + cube_w
-                  cy = by - n * cube_z - cube_h - 8
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="18" fill="#ff8c00" opacity="0.35"/>')
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="13" fill="#ffcc00" opacity="0.6"/>')
-                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="8" fill="#fff176"/>')
-                  for _ang in range(0, 360, 45):
-                      _x1 = cx + 10 * math.cos(math.radians(_ang))
-                      _y1 = cy + 10 * math.sin(math.radians(_ang))
-                      _x2 = cx + 18 * math.cos(math.radians(_ang))
-                      _y2 = cy + 18 * math.sin(math.radians(_ang))
+                  cy = by - n * cube_z - cube_h - 14
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="24" fill="#ff8c00" opacity="0.35"/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="18" fill="#ffcc00" opacity="0.6"/>')
+                  fireball_lines.append(f'<circle cx="{cx}" cy="{cy}" r="11" fill="#fff176"/>')
+                  for _ang in range(0, 360, 30):
+                      _x1 = cx + 16 * math.cos(math.radians(_ang))
+                      _y1 = cy + 16 * math.sin(math.radians(_ang))
+                      _x2 = cx + 26 * math.cos(math.radians(_ang))
+                      _y2 = cy + 26 * math.sin(math.radians(_ang))
                       fireball_lines.append(
                           f'<line x1="{_x1:.1f}" y1="{_y1:.1f}" '
                           f'x2="{_x2:.1f}" y2="{_y2:.1f}" '
