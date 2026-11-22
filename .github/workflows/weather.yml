@@ -2,8 +2,7 @@ name: Seattle Weather
 
 on:
   schedule:
-    - cron: "0 13 * * *"
-    - cron: "0 1 * * *"
+    - cron: "17 */4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -13,6 +12,8 @@ jobs:
   weather:
     runs-on: ubuntu-latest
     steps:
+      - name: Random jitter
+        run: sleep $((RANDOM % 300))
       - uses: actions/checkout@v7
       - name: Pull latest changes
         run: git pull --rebase origin main
@@ -529,6 +530,8 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Update Seattle weather diagram [skip ci]"
-            git pull --rebase origin main
-            git push
+            for i in 1 2 3 4 5; do
+              git pull --rebase origin main && git push && break
+              sleep $((RANDOM % 15 + 5))
+            done
           fi
