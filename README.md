@@ -20,12 +20,12 @@ I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and d
 | 🔴 **Monday** · Nov 23 | `51/39 F` | 🌧️ Rain | `7:26a` / `4:24p` |
 | 🟢 **Tuesday** · Nov 24 | `49/44 F` | 🌧️ Rain | `7:27a` / `4:24p` |
 | ⛄ **Wednesday** · Nov 25 | `52/44 F` | 🌧️ Rain | `7:28a` / `4:23p` |
-| ☀️ **Sun** | ♐ Sagittarius `0°` | **8th House** · Placidus | `Nov 22 · 1:50 PM PST` |
-| 🌙 **Moon** | ♉ Taurus `6°` | **1st House** · 🌔 96% | Waxing Gibbous |
-| 🌑 **New Moon** | `Nov 8` | **4th House** ♏ · New cycle, 0% | `11:02p` PST |
-| 🌓 **First Qtr** | `Nov 17` | **5th House** ♒ · Waxing, 50% | `3:48a` PST |
+| ☀️ **Sun** | ♐ Sagittarius `0°` | **8th House** · Placidus | `Nov 22 · 2:27 PM PST` |
+| 🌙 **Moon** | ♉ Taurus `7°` | **1st House** · 🌔 96% | Waxing Gibbous |
+| 🌑 **New Moon** | `Dec 8` | **6th House** ♐ · New cycle, 0% | `4:52p` PST |
+| 🌓 **First Qtr** | `Dec 16` | **8th House** ♓ · Waxing, 50% | `9:43p` PST |
 | 🌕 **Full Moon** | `Nov 24` | **7th House** ♊ · Peak light, 100% | `6:53a` PST |
-| 🌗 **Last Qtr** | `Nov 1` · `Nov 30` | **7th** ♌ · **1st House** ♍ · Release, 50% | `12:28p` · `10:09p` PST |
+| 🌗 **Last Qtr** | `Nov 30` | **1st House** ♍ · Release, 50% | `10:09p` PST |
 <!-- weather:end -->
 
 [![Lint](https://github.com/23skdu/23skdu/actions/workflows/lint.yml/badge.svg)](https://github.com/23skdu/23skdu/actions/workflows/lint.yml)
