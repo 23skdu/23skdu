@@ -29,3 +29,8 @@ I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and d
 <!-- weather:end -->
 
 [![Lint](https://github.com/23skdu/23skdu/actions/workflows/lint.yml/badge.svg)](https://github.com/23skdu/23skdu/actions/workflows/lint.yml)
+
+## License
+
+This project is released into the public domain under the
+[Unlicense](https://unlicense.org). See [LICENSE](LICENSE) for details.
