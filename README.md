@@ -16,12 +16,12 @@ I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and d
 
 | 🌌 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Night/Day Illumination |
 | :--- | :---: | :--- | :---: |
-| 🌟 **Today** · Nov 25 | **54 F** | 🌤️ Partly cloudy | `7:28a` / `4:23p` |
-| 🕯️ **Thursday** · Nov 26 | `56/48 F` | 🌧️ Rain | `7:30a` / `4:22p` |
-| 🦌 **Friday** · Nov 27 | `49/43 F` | 🌦️ Drizzle | `7:31a` / `4:22p` |
-| 🧣 **Saturday** · Nov 28 | `50/43 F` | 🌦️ Drizzle | `7:33a` / `4:21p` |
-| ☀️ **Sun** | ♐ Sagittarius `3°` | **11th House** · Placidus | `Nov 25 · 9:14 AM PST` |
-| 🌙 **Moon** | ♊ Gemini `18°` | **6th House** · 🌕 98% | Full Moon |
+| 🌟 **Today** · Nov 25 | **53 F** | 🌧️ Light drizzle | `7:29a` / `4:23p` |
+| 🕯️ **Thursday** · Nov 26 | `54/47 F` | 🌧️ Light drizzle | `7:29a` / `4:23p` |
+| 🦌 **Friday** · Nov 27 | `54/48 F` | 🌧️ Light rain shower | `7:31a` / `4:22p` |
+| 🧣 **Saturday** · Nov 28 | `49/45 F` | 🌧️ Light rain | `7:32a` / `4:22p` |
+| ☀️ **Sun** | ♐ Sagittarius `3°` | **6th House** · Placidus | `Nov 25 · 5:47 PM PST` |
+| 🌙 **Moon** | ♊ Gemini `24°` | **12th House** · 🌕 97% | Full Moon |
 | 🌑 **New Moon** | `Dec 8` | **6th House** ♐ · New cycle, 0% | `4:52p` PST |
 | 🌓 **First Qtr** | `Dec 16` | **8th House** ♓ · Waxing, 50% | `9:43p` PST |
 | 🌕 **Full Moon** | `Dec 23` | **12th House** ♋ · Peak light, 100% | `5:28p` PST |
