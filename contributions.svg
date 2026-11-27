@@ -13,7 +13,7 @@
     </feMerge>
   </filter>
 </defs>
-<text x="8" y="14" fill="#c9d1d9" font-size="10" font-family="sans-serif">GitHub Contributions · past year · 9580 total</text>
+<text x="8" y="14" fill="#c9d1d9" font-size="10" font-family="sans-serif">GitHub Contributions · past year · 9614 total</text>
 <g filter="url(#glow)">
 <polygon points="96,124 108,127 108,130 96,127" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 <polygon points="120,124 108,127 108,130 120,127" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
@@ -3192,15 +3192,27 @@
 <polygon points="612,268 624,271 624,274 612,271" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 <polygon points="636,268 624,271 624,274 636,271" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 <polygon points="612,268 624,265 636,268 624,271" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
-<polygon points="636,283 648,286 648,289 636,286" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="660,283 648,286 648,289 660,286" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="636,283 648,280 660,283 648,286" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="636,280 648,283 648,286 636,283" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="660,280 648,283 648,286 660,283" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="636,280 648,277 660,280 648,283" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="636,277 648,280 648,283 636,280" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="660,277 648,280 648,283 660,280" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
-<polygon points="636,277 648,274 660,277 648,280" fill="#ffca28" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,283 648,286 648,289 636,286" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="660,283 648,286 648,289 660,286" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,283 648,280 660,283 648,286" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,280 648,283 648,286 636,283" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="660,280 648,283 648,286 660,283" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,280 648,277 660,280 648,283" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,277 648,280 648,283 636,280" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="660,277 648,280 648,283 660,280" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,277 648,274 660,277 648,280" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,274 648,277 648,280 636,277" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="660,274 648,277 648,280 660,277" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,274 648,271 660,274 648,277" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,271 648,274 648,277 636,274" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="660,271 648,274 648,277 660,274" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,271 648,268 660,271 648,274" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,268 648,271 648,274 636,271" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="660,268 648,271 648,274 660,271" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,268 648,265 660,268 648,271" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,265 648,268 648,271 636,268" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="660,265 648,268 648,271 660,268" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
+<polygon points="636,265 648,262 660,265 648,268" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 <polygon points="600,286 612,289 612,292 600,289" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 <polygon points="624,286 612,289 612,292 624,289" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 <polygon points="600,286 612,283 624,286 612,289" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
@@ -3265,7 +3277,7 @@
 <polygon points="624,226 612,229 612,232 624,229" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 <polygon points="600,226 612,223 624,226 612,229" fill="#d32f2f" stroke="#164020" stroke-width="0.2"/>
 </g>
-<polyline points="72,115 60,118 48,121" fill="none" stroke="#f85149" stroke-width="1.2"/>
+<polyline points="72,115 60,118" fill="none" stroke="#f85149" stroke-width="1.2"/>
 <text x="69" y="113" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Nov</text>
 <polyline points="96,121 84,124 72,127 60,130 48,133 36,136 24,139" fill="none" stroke="#f85149" stroke-width="1.2"/>
 <text x="93" y="119" fill="#f85149" font-size="11" font-weight="bold" text-anchor="end" font-family="sans-serif">Dec</text>
