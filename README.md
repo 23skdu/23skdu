@@ -16,12 +16,12 @@ I'm a DevOps/Site-Reliability Engineer who builds high-performance systems and d
 
 | 🌌 Space/Time(spacetime) | 🌡️ Reading | ❄️ Details | 🌅 Night/Day Illumination |
 | :--- | :---: | :--- | :---: |
-| 🌟 **Today** · Nov 27 | **48 F** | 🌤️ Partly cloudy | `7:31a` / `4:22p` |
+| 🌟 **Today** · Nov 27 | **47 F** | 🌤️ Partly cloudy | `7:31a` / `4:22p` |
 | 🧣 **Saturday** · Nov 28 | `50/41 F` | 🌦️ Drizzle | `7:33a` / `4:21p` |
 | 🔔 **Sunday** · Nov 29 | `51/42 F` | 🌦️ Drizzle | `7:34a` / `4:20p` |
 | 🔴 **Monday** · Nov 30 | `51/45 F` | 🌦️ Rain showers | `7:35a` / `4:20p` |
-| ☀️ **Sun** | ♐ Sagittarius `5°` | **6th House** · Placidus | `Nov 27 · 6:16 PM PST` |
-| 🌙 **Moon** | ♋ Cancer `24°` | **2nd House** · 🌖 83% | Waning Gibbous |
+| ☀️ **Sun** | ♐ Sagittarius `5°` | **5th House** · Placidus | `Nov 27 · 7:19 PM PST` |
+| 🌙 **Moon** | ♋ Cancer `25°` | **1st House** · 🌖 83% | Waning Gibbous |
 | 🌑 **New Moon** | `Dec 8` | **6th House** ♐ · New cycle, 0% | `4:52p` PST |
 | 🌓 **First Qtr** | `Dec 16` | **8th House** ♓ · Waxing, 50% | `9:43p` PST |
 | 🌕 **Full Moon** | `Dec 23` | **12th House** ♋ · Peak light, 100% | `5:28p` PST |
